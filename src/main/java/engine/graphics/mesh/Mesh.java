@@ -6,6 +6,7 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.io.*;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Mesh {
 
     private int vaoId;
     private int vboId;
+    private int eboId;
 
     //After reading
     private Vector3f[] positions;
@@ -103,7 +105,6 @@ public class Mesh {
         vertices = new Vertex[vertexIndicesTempList.size()];
         int i = 0;
         for(VertexIndex vertexIndex : vertexIndicesTempList) {
-            //TODO
             Vector3f position = positions[vertexIndex.getPositionId()];
             Vector3f normal = normals[vertexIndex.getNormalId()];
             Vector2f uv = uvs[vertexIndex.getUvId()];
@@ -123,22 +124,48 @@ public class Mesh {
 
     private void createBuffers() {
 
-        FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(positions.length);
-        for(Vector3f vertex : positions) {
-            verticesBuffer.put(vertex.x);
-            verticesBuffer.put(vertex.y);
-            verticesBuffer.put(vertex.z);
-        }
-
         vaoId = glGenVertexArrays();
+        vboId = glGenBuffers();
+        eboId = glGenBuffers();
+
+
+        FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(positions.length);
+        for(Vertex vertex : vertices) {
+            vertex.addToBuffer(verticesBuffer);
+        }
+        //TODO Upewnić się że powinno być flip!
+        verticesBuffer.flip();
+
         glBindVertexArray(vaoId);
 
-        vboId = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, IntBuffer.wrap(indices), GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.size(), 0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false,  Vertex.size(), Float.SIZE * 3);
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, false,  Vertex.size(), Float.SIZE * 6);
+
+        // Unbind
+        glBindVertexArray(0);
+
+    }
+
+    private void bind()
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+        glBindVertexArray(vaoId);
     }
 
     public void draw() {
-        //TODO
+        bind();
+        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
     }
 }

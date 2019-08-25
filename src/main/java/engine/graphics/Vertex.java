@@ -1,4 +1,4 @@
-package engine.models.rendering;
+package engine.graphics;
 
 import lombok.Data;
 import org.joml.Vector2f;

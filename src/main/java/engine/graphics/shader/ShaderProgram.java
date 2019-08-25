@@ -1,10 +1,8 @@
-package engine.components.shader;
+package engine.graphics.shader;
 
-import engine.components.shader.Shader;
-import engine.models.Component;
 import static org.lwjgl.opengl.GL20.*;
 
-public class ShaderProgram extends Component {
+public class ShaderProgram {
     private int id;
 
     public ShaderProgram(String vertexPath, String fragmentPath) throws Exception {

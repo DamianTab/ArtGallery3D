@@ -20,6 +20,6 @@ public class Camera extends Component {
     private Matrix4f perspectiveMatrix;
 
     private void generateViewAndPerspective() {
-
+        //todo
     }
 }

@@ -16,9 +16,13 @@ public class Mesh {
     private int vaoId;
     private int vboId;
 
+    //After reading
     private Vector3f[] positions;
     private Vector3f[] normals;
     private Vector2f[] uvs;
+
+    private Vertex[] vertices;
+    private int[] indices;
 
     //TODO Zamienic na Vertexy
 
@@ -37,6 +41,8 @@ public class Mesh {
         List<Vector3f> vertexTempList = new ArrayList<>();
         List<Vector3f> normalTempList = new ArrayList<>();
         List<Vector2f> uvTempList = new ArrayList<>();
+        List<VertexIndex> vertexIndicesTempList = new ArrayList<>();
+        List<Integer> indexTempList = new ArrayList<>();
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
         String line;
@@ -61,6 +67,48 @@ public class Mesh {
                 Vector3f normal =  new Vector3f(Float.parseFloat(split[1]), Float.parseFloat(split[2]), Float.parseFloat(split[3]));
                 normalTempList.add(normal);
             }
+            // Face
+            else if(identifier.equals("f")) {
+                List<Integer> faceIndices = new ArrayList<>();
+                for(int i = 1; i < split.length; i++) {
+                    int index = -1;
+                    VertexIndex vertexIndex = new VertexIndex(split[i]);
+                    // Check for duplicates
+                    int j = 0;
+                    for(VertexIndex vi : vertexIndicesTempList) {
+                        if(vi.equals(vertexIndex)) {
+                            // This is already present
+                            index = i;
+                        }
+                        j++;
+                    }
+                    // This is a new vertex index
+                    if(index == -1) {
+                        vertexIndicesTempList.add(vertexIndex);
+                        index = vertexIndicesTempList.size();
+                    }
+
+                    faceIndices.add(index);
+                }
+                int first = faceIndices.get(0);
+                for(int i = 2; i < faceIndices.size(); i++) {
+                    // Add triangle
+                    indexTempList.add(first);
+                    indexTempList.add(faceIndices.get(i - 1));
+                    indexTempList.add(faceIndices.get(i));
+                }
+            }
+        }
+
+        vertices = new Vertex[vertexIndicesTempList.size()];
+        int i = 0;
+        for(VertexIndex vertexIndex : vertexIndicesTempList) {
+            //TODO
+            Vector3f position = positions[vertexIndex.getPositionId()];
+            Vector3f normal = normals[vertexIndex.getNormalId()];
+            Vector2f uv = uvs[vertexIndex.getUvId()];
+            vertices[i] = new Vertex(position, normal ,uv);
+            i++;
         }
 
         Vector3f[] verticesArray = new Vector3f[vertexTempList.size()];
@@ -69,6 +117,8 @@ public class Mesh {
         normals = normalTempList.toArray(normalsArray);
         Vector2f[] uvArray = new Vector2f[uvTempList.size()];
         uvs = uvTempList.toArray(uvArray);
+        indices = indexTempList.stream().mapToInt(integer->integer).toArray();
+
     }
 
     private void createBuffers() {

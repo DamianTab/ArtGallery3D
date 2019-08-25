@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RectangleCollision extends Collider {
 
-    private final float length;
-    private final float width;
+    private float length;
+    private float width;
 
 
     @Override

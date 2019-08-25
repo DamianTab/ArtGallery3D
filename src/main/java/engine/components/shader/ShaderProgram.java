@@ -1,5 +1,6 @@
-package engine.components;
+package engine.components.shader;
 
+import engine.components.shader.Shader;
 import engine.models.Component;
 import static org.lwjgl.opengl.GL20.*;
 

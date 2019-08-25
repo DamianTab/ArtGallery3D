@@ -1,4 +1,4 @@
-package engine.components;
+package engine.components.shader;
 
 import lombok.Getter;
 import org.apache.commons.io.FileUtils;

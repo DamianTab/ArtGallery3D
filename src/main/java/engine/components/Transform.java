@@ -12,8 +12,7 @@ public class Transform extends Component {
     Vector3f scale;
     Transform parent;
 
-    public Transform(GameObject gameObject, Vector3f position, Vector3f rotation, Vector3f scale, Transform parent) {
-        super(gameObject);
+    public Transform(Vector3f position, Vector3f rotation, Vector3f scale, Transform parent) {
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
@@ -21,6 +20,7 @@ public class Transform extends Component {
     }
 
     public void getMatrix(){
+
     }
 
 }

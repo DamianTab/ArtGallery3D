@@ -20,18 +20,22 @@ public abstract class GameObject implements ObjectBehavior {
     }
 
 
-    public <T> Component getComponent(Class<T> t){
+    public Component getComponent(Component.Type type){
         for(Component component : components) {
-            if(t.isAssignableFrom(component.getClass())) {
-                return  component;
+            if(type == component.getType()) {
+                return component;
             }
         }
         return null;
     }
 
     public void addComponent(Component component) {
+        component.setGameObject(this);
         components.add(component);
     }
 
+    public Transform getTransform() {
+        return (Transform)getComponent(Component.Type.TRANSFORM);
+    }
 
 }

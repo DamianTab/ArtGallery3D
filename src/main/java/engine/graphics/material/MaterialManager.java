@@ -1,15 +1,16 @@
-package engine.graphics.texture;
+package engine.graphics.material;
+
+import engine.graphics.texture.Texture;
 
 import java.util.Map;
 
-//todo
-public class TextureManager {
+public class MaterialManager {
 
     //Singletone Implementation
-    private static volatile TextureManager managerInstance;
+    private static volatile MaterialManager managerInstance;
 
     //private constructor.
-    private TextureManager(){
+    private MaterialManager(){
         //Prevent form the reflection api.
         if (managerInstance != null){
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
@@ -17,13 +18,13 @@ public class TextureManager {
     }
 
 
-    public static TextureManager getInstance() {
+    public static MaterialManager getInstance() {
         //Double check locking pattern
         if (managerInstance == null) { //Check for the first time
 
-            synchronized (TextureManager.class) {   //Check for the second time.
+            synchronized (MaterialManager.class) {   //Check for the second time.
                 //if there is no instance available... create new one
-                if (managerInstance == null) managerInstance = new TextureManager();
+                if (managerInstance == null) managerInstance = new MaterialManager();
             }
         }
 
@@ -32,5 +33,8 @@ public class TextureManager {
 
     //    ----------------------------------------------------------------------
 
-    private Map<String, Texture> textureContainer;
+    private Map<String, Texture> materialContainer;
+
+
+
 }

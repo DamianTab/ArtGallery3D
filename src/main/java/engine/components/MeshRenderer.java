@@ -12,4 +12,9 @@ public class MeshRenderer extends Component {
     void render(Mesh mesh){
         //todo
     }
+
+    @Override
+    protected Type getType() {
+        return Type.TRANSFORM;
+    }
 }

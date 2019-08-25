@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public class HelloWorld {
+public class Main {
 
     // The window handle
     private long window;
@@ -109,7 +109,7 @@ public class HelloWorld {
     }
 
     public static void main(String[] args) {
-        new HelloWorld().run();
+        new Main().run();
     }
 
 }

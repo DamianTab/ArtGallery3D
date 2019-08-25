@@ -22,7 +22,7 @@ public class Mesh {
 
     //TODO Zamienic na Vertexy
 
-    public Mesh(String path) {
+    public Mesh(String path) throws IOException {
         init(path);
     }
 

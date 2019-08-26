@@ -14,6 +14,7 @@ public class Camera extends Component {
 
     @Setter
     private Transform target;
+    @Getter
     private Transform transform;
 
     private float fieldOfView = 90.0f;

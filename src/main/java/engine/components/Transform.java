@@ -55,7 +55,12 @@ public class Transform extends Component {
     }
 
     public Matrix4f getAbsoluteMatrix() {
-        return parent.getMatrix().mul(getMatrix());
+        if(parent != null) {
+            return parent.getMatrix().mul(getMatrix());
+        }
+        else {
+            return getMatrix();
+        }
     }
 
     public Vector3f getAbsolutePosition() {

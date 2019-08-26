@@ -16,7 +16,7 @@ public abstract class GameObject implements ObjectBehavior {
     List <Component> components = new ArrayList<>();
 
     public GameObject() {
-
+        addComponent(new Transform());
     }
 
 
@@ -36,6 +36,19 @@ public abstract class GameObject implements ObjectBehavior {
 
     public Transform getTransform() {
         return (Transform)getComponent(Component.Type.TRANSFORM);
+    }
+
+
+
+    public interface Callable {
+        void call(GameObject gameObject);
+    }
+
+    public void executeForEvery(Callable callable) {
+        for(GameObject gameObject : children) {
+            gameObject.executeForEvery(callable);
+        }
+        callable.call(this);
     }
 
 }

@@ -11,8 +11,8 @@ public class MeshRenderer extends Component {
     private Material material;
     private ShaderProgram shader;
 
-    void render(Mesh mesh){
-
+    public void use(){
+        shader.use();
     }
 
     @Override

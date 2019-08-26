@@ -140,6 +140,7 @@ public class Mesh {
         for(int index : indices) {
             indicesBuffer.put(index);
         }
+        indicesBuffer.flip();
 
         glBindVertexArray(vaoId);
 

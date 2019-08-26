@@ -16,6 +16,7 @@ public class Renderer {
 
     public void draw(GameObject gameObject){
         Camera camera = (Camera) gameObject.getComponent(Component.Type.CAMERA);
+        camera.generateViewAndPerspective();
         if(camera != null) {
             gameObject.executeForEvery((GameObject gameobject) -> {
                 MeshRenderer meshRenderer = (MeshRenderer) gameObject.getComponent(Component.Type.MESH_RENDERER);

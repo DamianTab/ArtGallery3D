@@ -10,7 +10,6 @@ import lombok.Data;
 public class Material {
 
     private Texture diffuseMap;
-    private ShaderProgram shaderProgram;
 
     //todo
 }

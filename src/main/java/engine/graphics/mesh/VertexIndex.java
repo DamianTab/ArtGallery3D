@@ -12,8 +12,8 @@ public class VertexIndex {
     public VertexIndex(String line) {
         String[] split = line.split("/");
         positionId = Integer.parseInt(split[0]);
-        normalId = Integer.parseInt(split[1]);
-        uvId = Integer.parseInt(split[2]);
+        uvId = Integer.parseInt(split[1]);
+        normalId = Integer.parseInt(split[2]);
     }
 
     public boolean equals(VertexIndex other) {

@@ -23,6 +23,7 @@ public class Renderer {
                 if (meshRenderer != null && meshFilter != null) {
                     meshRenderer.use();
                     setUniforms(gameObject, meshRenderer.getShader(), camera);
+
                     //Finally draw a mesh
                     meshFilter.getMesh().draw();
                 }

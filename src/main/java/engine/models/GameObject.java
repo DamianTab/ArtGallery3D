@@ -29,6 +29,11 @@ public abstract class GameObject implements ObjectBehavior {
         return null;
     }
 
+    public void addChild(GameObject child) {
+        child.getTransform().setParent(getTransform());
+        children.add(child);
+    }
+
     public void addComponent(Component component) {
         component.setGameObject(this);
         components.add(component);

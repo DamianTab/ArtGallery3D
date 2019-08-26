@@ -1,6 +1,7 @@
 package engine.models;
 
 
+import engine.components.Transform;
 import lombok.Setter;
 
 public abstract class Component {
@@ -10,6 +11,10 @@ public abstract class Component {
     }
 
     protected abstract Type getType();
+
+    public Transform getTransform() {
+        return gameObject.getTransform();
+    }
 
     @Setter
     protected GameObject gameObject;

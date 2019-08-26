@@ -1,10 +1,11 @@
 package engine.graphics.shader;
 
 import lombok.Getter;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -19,7 +20,10 @@ public class Shader {
 
     private void init(String path, int shaderType) throws IOException {
         id = glCreateShader(shaderType);
-        String code = FileUtils.readFileToString(new File(path), "UTF-8");
+        StringWriter writer = new StringWriter();
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
+        IOUtils.copy(inputStream, writer, "UTF-8");
+        String code = writer.toString();
         glShaderSource(id, code);
         glCompileShader(id);
     }

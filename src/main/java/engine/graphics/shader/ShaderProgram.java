@@ -32,6 +32,10 @@ public class ShaderProgram {
         }
     }
 
+    public int getLocation(String attribute) {
+        return glGetUniformLocation(id, attribute);
+    }
+
     public void use() {
         glUseProgram(id);
     }

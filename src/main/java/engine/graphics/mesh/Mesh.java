@@ -46,7 +46,7 @@ public class Mesh {
         List<VertexIndex> vertexIndicesTempList = new ArrayList<>();
         List<Integer> indexTempList = new ArrayList<>();
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(path)));
         String line;
         while((line = bufferedReader.readLine()) != null) {
             String[] split = line.split(" ");
@@ -102,16 +102,6 @@ public class Mesh {
             }
         }
 
-        vertices = new Vertex[vertexIndicesTempList.size()];
-        int i = 0;
-        for(VertexIndex vertexIndex : vertexIndicesTempList) {
-            Vector3f position = positions[vertexIndex.getPositionId()];
-            Vector3f normal = normals[vertexIndex.getNormalId()];
-            Vector2f uv = uvs[vertexIndex.getUvId()];
-            vertices[i] = new Vertex(position, normal ,uv);
-            i++;
-        }
-
         Vector3f[] verticesArray = new Vector3f[vertexTempList.size()];
         positions = vertexTempList.toArray(verticesArray);
         Vector3f[] normalsArray = new Vector3f[normalTempList.size()];
@@ -119,6 +109,16 @@ public class Mesh {
         Vector2f[] uvArray = new Vector2f[uvTempList.size()];
         uvs = uvTempList.toArray(uvArray);
         indices = indexTempList.stream().mapToInt(integer->integer).toArray();
+
+        vertices = new Vertex[vertexIndicesTempList.size()];
+        int i = 0;
+        for(VertexIndex vertexIndex : vertexIndicesTempList) {
+            Vector3f position = positions[vertexIndex.getPositionId() - 1];
+            Vector3f normal = normals[vertexIndex.getNormalId() - 1];
+            Vector2f uv = uvs[vertexIndex.getUvId() - 1];
+            vertices[i] = new Vertex(position, normal ,uv);
+            i++;
+        }
 
     }
 
@@ -129,12 +129,17 @@ public class Mesh {
         eboId = glGenBuffers();
 
 
-        FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(positions.length);
+        FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(vertices.length*Vertex.floatCount());
         for(Vertex vertex : vertices) {
             vertex.addToBuffer(verticesBuffer);
         }
         //TODO Upewnić się że powinno być flip!
         verticesBuffer.flip();
+
+        IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
+        for(int index : indices) {
+            indicesBuffer.put(index);
+        }
 
         glBindVertexArray(vaoId);
 
@@ -142,7 +147,7 @@ public class Mesh {
         glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, IntBuffer.wrap(indices), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glEnableVertexAttribArray(0);

@@ -1,26 +1,22 @@
 package engine.components;
 
 import engine.models.Component;
-import engine.models.GameObject;
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class Transform extends Component {
 
-    private Vector3f position;
-    private Vector3f rotation;
-    private Vector3f scale;
+    private Vector3f position = new Vector3f();
+    private Vector3f rotation = new Vector3f();
+    private Vector3f scale = new Vector3f(1.0f, 1.0f, 1.0f);
     private Matrix4f matrix;
+    @Setter
     private Transform parent;
     private boolean dirty = true;
 
-    public Transform(Vector3f position, Vector3f rotation, Vector3f scale, Transform parent) {
-        this.position = position;
-        this.rotation = rotation;
-        this.scale = scale;
-        this.parent = parent;
+    public Transform() {
     }
 
     public void setPosition(Vector3f position) {
@@ -55,7 +51,12 @@ public class Transform extends Component {
     }
 
     public Matrix4f getAbsoluteMatrix() {
-        return parent.getMatrix().mul(getMatrix());
+        if(parent != null) {
+            return parent.getMatrix().mul(getMatrix());
+        }
+        else {
+            return getMatrix();
+        }
     }
 
     public Vector3f getAbsolutePosition() {

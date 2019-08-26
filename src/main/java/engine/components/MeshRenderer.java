@@ -8,11 +8,17 @@ import lombok.Data;
 
 @Data
 public class MeshRenderer extends Component {
+
+    public MeshRenderer(ShaderProgram shader, Material material) {
+        this.material = material;
+        this.shader = shader;
+    }
+
     private Material material;
     private ShaderProgram shader;
 
-    void render(Mesh mesh){
-
+    public void use(){
+        shader.use();
     }
 
     @Override

@@ -23,6 +23,6 @@ public class MeshRenderer extends Component {
 
     @Override
     protected Type getType() {
-        return Type.TRANSFORM;
+        return Type.MESH_RENDERER;
     }
 }

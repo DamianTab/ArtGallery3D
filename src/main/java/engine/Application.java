@@ -6,6 +6,7 @@ import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.system.Configuration;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
@@ -24,7 +25,7 @@ public abstract class Application {
 
     // The window handle
     private long window;
-    private GameObject root = getRoot();
+    private GameObject root;
     private Renderer renderer = new Renderer();
 
     public void run() {
@@ -46,6 +47,9 @@ public abstract class Application {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
+
+        // LWJGL performs additional, more expensive checks, when the debug mode is enabled
+        Configuration.DEBUG.set(true);
 
         // Initialize GLFW. Most GLFW functions will not work before doing this.
         if ( !glfwInit() )
@@ -103,10 +107,11 @@ public abstract class Application {
         // bindings available for use.
         GL.createCapabilities();
 
+        root = getRoot();
+
         // Set the clear color
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
-        root.executeForEvery(ObjectBehavior::start);
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.

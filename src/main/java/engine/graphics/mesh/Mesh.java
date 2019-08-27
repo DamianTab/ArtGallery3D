@@ -133,7 +133,6 @@ public class Mesh {
         for(Vertex vertex : vertices) {
             vertex.addToBuffer(verticesBuffer);
         }
-        //TODO Upewnić się że powinno być flip!
         verticesBuffer.flip();
 
         IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
@@ -150,11 +149,12 @@ public class Mesh {
 
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.floatCount(), 0);
+        int floatSize = 4;
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.floatCount()*floatSize, 0);
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false,  Vertex.floatCount(),  3);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false,  Vertex.floatCount()*floatSize,  3*floatSize);
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, false,  Vertex.floatCount(),  6);
+        glVertexAttribPointer(2, 2, GL_FLOAT, false,  Vertex.floatCount()*floatSize,  6*floatSize);
 
         // Unbind
         glBindVertexArray(0);

@@ -26,7 +26,7 @@ public class Camera extends Component {
     private Matrix4f perspectiveMatrix;
 
     public void generateViewAndPerspective() {
-        viewMatrix = new Matrix4f().identity().lookAt(getTransform().getAbsolutePosition(), target.getAbsolutePosition(), new Vector3f(0.0f, 0.0f, 1.0f));
+        viewMatrix = new Matrix4f().identity().lookAt(getTransform().getAbsolutePosition(), target.getAbsolutePosition(), new Vector3f(0.0f, 1.0f, 0.0f));
         perspectiveMatrix = new Matrix4f().identity().perspective(fieldOfView, aspect, near, far);
 
     }

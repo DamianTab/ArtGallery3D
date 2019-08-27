@@ -17,6 +17,7 @@ public abstract class GameObject implements ObjectBehavior {
 
     public GameObject() {
         addComponent(new Transform());
+        start();
     }
 
 

@@ -39,7 +39,7 @@ public class Transform extends Component {
         matrix.rotateXYZ(rotation);
         matrix.scale(scale);
         matrix.transform(new Vector4f(position, 1.0f));
-        return generateMatrix();
+        return matrix;
     }
 
     public Matrix4f getMatrix() {

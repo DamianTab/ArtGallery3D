@@ -14,10 +14,11 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Renderer {
 
-    public void draw(GameObject gameObject){
-        Camera camera = (Camera) gameObject.getComponent(Component.Type.CAMERA);
+    public void draw(GameObject root){
+        Camera camera = (Camera) root.getComponent(Component.Type.CAMERA);
         if(camera != null) {
-            gameObject.executeForEvery((GameObject gameobject) -> {
+            camera.generateViewAndPerspective();
+            root.executeForEvery((GameObject gameObject) -> {
                 MeshRenderer meshRenderer = (MeshRenderer) gameObject.getComponent(Component.Type.MESH_RENDERER);
                 MeshFilter meshFilter = (MeshFilter) gameObject.getComponent(Component.Type.MESH_FILTER);
                 if (meshRenderer != null && meshFilter != null) {
@@ -36,13 +37,15 @@ public class Renderer {
 
     //Set uniforms in shader
     private void setUniforms(GameObject o, ShaderProgram program, Camera camera) {
-        FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
-        camera.getPerspectiveMatrix().get(matrixBuffer);
-        glUniformMatrix4fv(program.getLocation("p_matrix"), false, matrixBuffer);
-        camera.getViewMatrix().get(matrixBuffer);
-        glUniformMatrix4fv(program.getLocation("v_matrix"), false, matrixBuffer);
-        o.getTransform().getAbsoluteMatrix().get(matrixBuffer);
-        glUniformMatrix4fv(program.getLocation("m_matrix"), false, matrixBuffer);
+        FloatBuffer pMatrixBuffer = BufferUtils.createFloatBuffer(16);
+        camera.getPerspectiveMatrix().get(pMatrixBuffer);
+        glUniformMatrix4fv(program.getLocation("p_matrix"), false, pMatrixBuffer);
+        FloatBuffer vMatrixBuffer = BufferUtils.createFloatBuffer(16);
+        camera.getViewMatrix().get(vMatrixBuffer);
+        glUniformMatrix4fv(program.getLocation("v_matrix"), false, vMatrixBuffer);
+        FloatBuffer mMatrixBuffer = BufferUtils.createFloatBuffer(16);
+        o.getTransform().getAbsoluteMatrix().get(mMatrixBuffer);
+        glUniformMatrix4fv(program.getLocation("m_matrix"), false, mMatrixBuffer);
 
         FloatBuffer vector3Buffer = BufferUtils.createFloatBuffer(3);
         camera.getTransform().getAbsolutePosition().get(vector3Buffer);

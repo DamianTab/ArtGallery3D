@@ -2,7 +2,7 @@ package engine;
 
 public class Time {
     private static int framesCounter=0;
-    private static long timeElapsed=0;
+    public static long timeElapsed=0;
     private static long startTick;
     private static long endTick;
 
@@ -16,7 +16,8 @@ public class Time {
 
     //Dajemy na koncu petli
     public static void endTickFPS(){
-        startTick = System.nanoTime();
+        endTick = System.nanoTime();
+        timeElapsed += getDeltaTime();
     }
 
 
@@ -35,5 +36,9 @@ public class Time {
 
     public static long getDeltaTime(){
         return (endTick - startTick) * precision;
+    }
+
+    public static long getTimeElapsedMillis() {
+        return timeElapsed/1000000;
     }
 }

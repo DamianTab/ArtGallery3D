@@ -87,7 +87,7 @@ public class Mesh {
                     // This is a new vertex index
                     if(index == -1) {
                         vertexIndicesTempList.add(vertexIndex);
-                        index = vertexIndicesTempList.size();
+                        index = vertexIndicesTempList.size() - 1;
                     }
 
                     faceIndices.add(index);
@@ -133,13 +133,11 @@ public class Mesh {
         for(Vertex vertex : vertices) {
             vertex.addToBuffer(verticesBuffer);
         }
-        //TODO Upewnić się że powinno być flip!
         verticesBuffer.flip();
 
         IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
-        for(int index : indices) {
-            indicesBuffer.put(index);
-        }
+        indicesBuffer.put(indices);
+        indicesBuffer.flip();
 
         glBindVertexArray(vaoId);
 
@@ -151,11 +149,12 @@ public class Mesh {
 
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.size(), 0);
+        int floatSize = 4;
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.floatCount()*floatSize, 0);
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false,  Vertex.size(), Float.SIZE * 3);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false,  Vertex.floatCount()*floatSize,  3*floatSize);
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, false,  Vertex.size(), Float.SIZE * 6);
+        glVertexAttribPointer(2, 2, GL_FLOAT, false,  Vertex.floatCount()*floatSize,  6*floatSize);
 
         // Unbind
         glBindVertexArray(0);
@@ -172,5 +171,6 @@ public class Mesh {
     public void draw() {
         bind();
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+
     }
 }

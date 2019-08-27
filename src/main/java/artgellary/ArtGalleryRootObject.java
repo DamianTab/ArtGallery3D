@@ -1,12 +1,11 @@
 package artgellary;
 
-import artgellary.shaders.ConstantShader;
+
+import engine.Time;
 import engine.components.Camera;
-import engine.components.MeshFilter;
-import engine.components.MeshRenderer;
-import engine.graphics.material.Material;
-import engine.graphics.mesh.Mesh;
 import engine.models.GameObject;
+import org.joml.Math;
+import org.joml.Vector3f;
 
 import java.io.IOException;
 
@@ -16,19 +15,20 @@ public class ArtGalleryRootObject extends GameObject {
 
     @Override
     public void start() {
-        camera = new Camera();
-        addComponent(camera);
 
-        try {
-            addComponent(new MeshRenderer(new ConstantShader(), new Material()));
-            addComponent(new MeshFilter(new Mesh("box.obj")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Room room = new Room();
+        addChild(room);
+
+        camera = new Camera(room.getTransform());
+        addComponent(camera);
     }
 
     @Override
     public void update() {
+        double t =( (double)Time.getTimeElapsedMillis())/1000000000000.0;
+        float sin = (float)Math.sin(t);
+        float cos = (float)Math.cos(t);
+        camera.getTransform().setPosition(new Vector3f( 3.0f*sin, 1.0f*sin, 2.0f*cos));
 
     }
 }

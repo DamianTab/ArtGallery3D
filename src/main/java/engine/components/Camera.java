@@ -8,7 +8,8 @@ import org.joml.Vector3f;
 
 public class Camera extends Component {
 
-    public Camera() {
+    public Camera(Transform target) {
+        this.target = target;
     }
 
     @Setter
@@ -16,7 +17,7 @@ public class Camera extends Component {
 
     private float fieldOfView = 90.0f;
     private float aspect = 1.0f;
-    private float near = 1.0f;
+    private float near = 0.5f;
     private float far = 100.0f;
 
     @Getter
@@ -24,9 +25,10 @@ public class Camera extends Component {
     @Getter
     private Matrix4f perspectiveMatrix;
 
-    private void generateViewAndPerspective() {
-        viewMatrix = new Matrix4f().identity().lookAt(getTransform().getAbsolutePosition(), target.getAbsolutePosition(), new Vector3f(0.0f, 0.0f, 1.0f));
+    public void generateViewAndPerspective() {
+        viewMatrix = new Matrix4f().identity().lookAt(getTransform().getAbsolutePosition(), target.getAbsolutePosition(), new Vector3f(0.0f, 1.0f, 0.0f));
         perspectiveMatrix = new Matrix4f().identity().perspective(fieldOfView, aspect, near, far);
+
     }
 
     @Override

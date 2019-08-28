@@ -107,6 +107,8 @@ public abstract class Application {
         // bindings available for use.
         GL.createCapabilities();
 
+        glEnable(GL_DEPTH_TEST);
+
         root = getRoot();
 
         // Set the clear color

@@ -42,7 +42,8 @@ public class Texture {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
         PNGDecoder decoder = new PNGDecoder(inputStream);
         ByteBuffer buf = ByteBuffer.allocateDirect(4*decoder.getWidth()*decoder.getHeight());
-        decoder.decode(buf, decoder.getWidth()*4, PNGDecoder.Format.RGBA);
+        System.out.println(path);
+        decoder.decode(buf, decoder.getWidth()*4, getDecoderFormat());
         buf.flip();
 
         activateTextureUnit();
@@ -67,6 +68,18 @@ public class Texture {
         else {
             return GL_RGBA;
         }
+    }
+
+    private PNGDecoder.Format getDecoderFormat() {
+        switch (type) {
+            case AMBIENT:
+                return PNGDecoder.Format.ALPHA;
+            case DIFFUSE:
+                return PNGDecoder.Format.RGBA;
+            case SPECULAR:
+                return PNGDecoder.Format.RGBA;
+        }
+        return null;
     }
 
     private String getLocationID() {

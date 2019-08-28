@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL14.GL_MIRRORED_REPEAT;
 import static org.lwjgl.opengl.GL20.glUniform1i;
 import static org.lwjgl.opengl.GL21.GL_SRGB8_ALPHA8;
+import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
 public class Texture {
 
@@ -42,7 +43,8 @@ public class Texture {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
         PNGDecoder decoder = new PNGDecoder(inputStream);
         ByteBuffer buf = ByteBuffer.allocateDirect(4*decoder.getWidth()*decoder.getHeight());
-        decoder.decode(buf, decoder.getWidth()*4, PNGDecoder.Format.RGBA);
+        System.out.println(path);
+        decoder.decode(buf, decoder.getWidth()*4, getDecoderFormat());
         buf.flip();
 
         activateTextureUnit();
@@ -52,6 +54,7 @@ public class Texture {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
         glTexImage2D(GL_TEXTURE_2D, 0, getInternalFormat(type), decoder.getWidth(), decoder.getHeight(), 0, GL_BGRA, GL_UNSIGNED_BYTE, buf);
+        glGenerateMipmap(GL_TEXTURE_2D);
     }
 
     private void activateTextureUnit() {
@@ -69,14 +72,26 @@ public class Texture {
         }
     }
 
+    private PNGDecoder.Format getDecoderFormat() {
+        switch (type) {
+            case AMBIENT:
+                return PNGDecoder.Format.ALPHA;
+            case DIFFUSE:
+                return PNGDecoder.Format.RGBA;
+            case SPECULAR:
+                return PNGDecoder.Format.RGBA;
+        }
+        return null;
+    }
+
     private String getLocationID() {
         switch (type) {
             case AMBIENT:
-                return "material.ambient";
+                return "material.ambientMap";
             case DIFFUSE:
-                return "material.diffuse";
+                return "material.diffuseMap";
             case SPECULAR:
-                return "material.specular";
+                return "material.specularMap";
         }
         return null;
     }

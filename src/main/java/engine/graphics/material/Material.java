@@ -20,9 +20,9 @@ import static org.lwjgl.opengl.GL20.glUniform3fv;
 public class Material {
     @Getter
     private String path;
-    private Vector3f ambientColor;
-    private Vector3f diffuseColor;
-    private Vector3f specularColor;
+    private Vector3f ambientColor = new Vector3f(1.0f, 1.0f, 1.0f);
+    private Vector3f diffuseColor = new Vector3f(1.0f, 1.0f, 1.0f);
+    private Vector3f specularColor = new Vector3f(1.0f, 1.0f, 1.0f);
     private Texture ambientMap;
     private Texture diffuseMap;
     private Texture specularMap;
@@ -35,9 +35,15 @@ public class Material {
     public void use(ShaderProgram program) {
 
         // Use textures
-        ambientMap.use(program);
-        diffuseMap.use(program);
-        specularMap.use(program);
+        if(ambientMap != null) {
+            ambientMap.use(program);
+        }
+        if(diffuseMap != null) {
+            diffuseMap.use(program);
+        }
+        if(specularMap != null) {
+            specularMap.use(program);
+        }
 
         // Set texture colors
         glUniform3fv(program.getLocation("material.ambientColor"), FloatBufferUtils.vector3ToFloatBuffer(ambientColor));

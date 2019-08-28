@@ -8,15 +8,19 @@ import org.joml.Vector3f;
 
 import static org.lwjgl.opengl.GL20.*;
 
+// A simple class representing point light
 @Data
 public class LightSource extends Component {
-    private float constant = 0.0f;
-    private float linear = 0.0f;
-    private float quadratic = 1.0f;
+    // These parameters decribe how light will lose intensity over distance.
+    private float constant = 0.0f; // Not dependent on distance
+    private float linear = 0.0f; // Linearly dependent on distance
+    private float quadratic = 1.0f; // Distance squared
     private Vector3f ambientColor = new Vector3f(1.0f, 1.0f, 1.0f);
     private Vector3f diffuseColor = new Vector3f(1.0f, 1.0f, 1.0f);
     private Vector3f specularColor = new Vector3f(1.0f, 1.0f, 1.0f);
 
+    // Set all lightsource properties to shader.
+    // i = index in array
     public void use(ShaderProgram program, int i) {
         String prefix = "lights[" + i + "].";
         glUniform3fv(program.getLocation(prefix + "ambientColor"), FloatBufferUtils.vector3ToFloatBuffer(ambientColor));

@@ -6,6 +6,7 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 
+// A simple helper to convert primitive types to FloatBuffer
 public class FloatBufferUtils {
     public static FloatBuffer vector3ToFloatBuffer(Vector3f v) {
         FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(3);

@@ -8,6 +8,7 @@ import engine.graphics.shader.ShaderProgram;
 import engine.models.Component;
 import engine.models.GameObject;
 import engine.utils.FloatBufferUtils;
+import engine.utils.IntegerWrapper;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -43,14 +44,10 @@ public class Renderer {
         return (Camera)cameraObject.getComponent(Component.Type.CAMERA);
     }
 
-    class IntegerWrapper {
-        public IntegerWrapper(int value) {
-            this.value = value;
-        }
-        int value;
-    }
-
+    // Find all light components and pass them to shaders
     public void useLights(GameObject root, ShaderProgram program) {
+        // I use some wrapper because I can't pass a local primitive type to a lambda.
+        // This is equivalent to an int pointer
         IntegerWrapper i = new IntegerWrapper(0);
         root.executeForEvery((GameObject gameObject) -> {
             Component c = gameObject.getComponent(Component.Type.LIGHT_SOURCE);

@@ -1,25 +1,15 @@
 package engine;
 
+import engine.input.InputDetector;
 import engine.models.GameObject;
 import engine.models.ObjectBehavior;
 import engine.utils.Time;
 import org.lwjgl.Version;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.Configuration;
-import org.lwjgl.system.MemoryStack;
 
-import java.nio.IntBuffer;
-
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_SRGB;
-import static org.lwjgl.system.MemoryStack.stackPush;
-import static org.lwjgl.system.MemoryUtil.NULL;
 
 public abstract class Application {
 
@@ -64,6 +54,9 @@ public abstract class Application {
         while ( !windowHandler.shouldClose() ) {
             Time.startTickFPS();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
+            //Update mouse input
+            InputDetector.updateInputDevices(windowHandler.getWindow());
 
             //Logic here
             root.executeForEvery(ObjectBehavior::update);

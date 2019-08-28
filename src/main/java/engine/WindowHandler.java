@@ -13,14 +13,16 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class WindowHandler {
 
-    private final String title;
-    private int width;
-    private int height;
     @Getter
     @Setter
     private boolean resized = false;
+    private final String title;
+    private int width;
+    private int height;
+
 
     // The window handle
+    @Getter
     private long window;
 
     public WindowHandler(String title, int width, int height) {

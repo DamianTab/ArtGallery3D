@@ -41,17 +41,19 @@ public class Texture {
 
     private void init() throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
+        // We use PNGDecoder to decode png file to BGRA format.
         PNGDecoder decoder = new PNGDecoder(inputStream);
         ByteBuffer buf = ByteBuffer.allocateDirect(4*decoder.getWidth()*decoder.getHeight());
-        System.out.println(path);
         decoder.decode(buf, decoder.getWidth()*4, getDecoderFormat());
         buf.flip();
 
         activateTextureUnit();
         id = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, id);
+        // We use mipmap for performace
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        // Texture will repeat when out of bounds
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
         glTexImage2D(GL_TEXTURE_2D, 0, getInternalFormat(type), decoder.getWidth(), decoder.getHeight(), 0, GL_BGRA, GL_UNSIGNED_BYTE, buf);
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -72,6 +74,7 @@ public class Texture {
         }
     }
 
+    // Different textures have different internal format
     private PNGDecoder.Format getDecoderFormat() {
         switch (type) {
             case AMBIENT:
@@ -84,6 +87,7 @@ public class Texture {
         return null;
     }
 
+    // Identifier in shader
     private String getLocationID() {
         switch (type) {
             case AMBIENT:

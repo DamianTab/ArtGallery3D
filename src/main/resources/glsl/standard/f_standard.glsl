@@ -59,24 +59,24 @@ vec3 calcPointLight(LightSource light, vec3 normal, vec3 fragPos, vec3 viewDir) 
 }
 
 void main() {
-    color = texture(material.diffuseMap, i_texCoord);
-    //color = vec4(i_texCoord.x, i_texCoord.y, 0.0f, 1.0f);
-//    vec3 normal = i_normal;
-//    //normal = normalize(normal * 2.0 - 1.0);
-//
-//    vec3 viewDir = normalize(i_viewPos - i_fragPos);
-//
-//    float alpha = texture(material.diffuseMap, i_texCoord).a;
-//
-//    if(alpha <= 0.0001) {
-//        discard;
-//    }
-//
-//    vec4 result = vec4(0.0, 0.0, 0.0, alpha);
-//
-//    for(int i = 0; i < MAX_LIGHTS; i++) {
-//        result += vec4(calcPointLight(lights[i], normal, i_fragPos, viewDir), 0.0f);
-//    }
-//
-//    color = result;
+    //color = texture(material.diffuseMap, i_texCoord);
+    color = vec4(i_texCoord.x, i_texCoord.y, 0.0f, 1.0f);
+    vec3 normal = i_normal;
+    //normal = normalize(normal * 2.0 - 1.0);
+
+    vec3 viewDir = normalize(i_viewPos - i_fragPos);
+
+    float alpha = texture(material.diffuseMap, i_texCoord).a;
+
+    if(alpha <= 0.0001) {
+        discard;
+    }
+
+    vec4 result = vec4(0.0, 0.0, 0.0, alpha);
+
+    for(int i = 0; i < MAX_LIGHTS; i++) {
+        result += vec4(calcPointLight(lights[i], normal, i_fragPos, viewDir), 0.0f);
+    }
+
+    color = result;
 }

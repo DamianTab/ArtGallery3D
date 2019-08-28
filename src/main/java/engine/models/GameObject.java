@@ -30,11 +30,13 @@ public abstract class GameObject implements ObjectBehavior {
         return null;
     }
 
+    // Add gameobject as a child and set it's transform parent to this
     public void addChild(GameObject child) {
         child.getTransform().setParent(getTransform());
         children.add(child);
     }
 
+    // Link component to this gameobject
     public void addComponent(Component component) {
         component.setGameObject(this);
         components.add(component);
@@ -45,11 +47,6 @@ public abstract class GameObject implements ObjectBehavior {
     }
 
 
-
-    public interface Callable {
-        void call(GameObject gameObject);
-    }
-
     // Execute a method for every gameObject in the tree
     public void executeForEvery(Callable callable) {
         for(GameObject gameObject : children) {
@@ -58,8 +55,8 @@ public abstract class GameObject implements ObjectBehavior {
         callable.call(this);
     }
 
-    public interface FindCondition {
-        boolean check(GameObject gameObject);
+    public interface Callable {
+        void call(GameObject gameObject);
     }
 
     // Look for a GameObject with a specified condition
@@ -74,6 +71,10 @@ public abstract class GameObject implements ObjectBehavior {
             }
         }
         return null;
+    }
+
+    public interface FindCondition {
+        boolean check(GameObject gameObject);
     }
 
 }

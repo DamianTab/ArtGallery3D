@@ -26,8 +26,6 @@ public class Mesh {
     private Vertex[] vertices;
     private int[] indices;
 
-    //TODO Zamienic na Vertexy
-
     public Mesh(String path) throws IOException {
         init(path);
     }
@@ -171,6 +169,5 @@ public class Mesh {
     public void draw() {
         bind();
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-
     }
 }

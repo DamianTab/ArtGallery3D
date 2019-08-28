@@ -12,8 +12,8 @@ public class Room extends GameObject {
     @Override
     public void start() {
         try {
-            addComponent(new MeshRenderer(new ConstantShader(), new Material()));
-            addComponent(new MeshFilter(new Mesh("box.obj")));
+            addComponent(new MeshRenderer(new ConstantShader(), new Material("obj/box/box.mtl")));
+            addComponent(new MeshFilter(new Mesh("obj/box/box.obj")));
         } catch (Exception e) {
             e.printStackTrace();
         }

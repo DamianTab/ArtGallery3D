@@ -520,6 +520,13 @@
             <version>${joml.version}</version>
         </dependency>
 
+        <!--TWL, bibliotego do konwersji PNG na RBGA-->
+        <dependency>
+            <groupId>org.l33tlabs.twl</groupId>
+            <artifactId>pngdecoder</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- FileUtils -->
         <dependency>
             <groupId>commons-io</groupId>

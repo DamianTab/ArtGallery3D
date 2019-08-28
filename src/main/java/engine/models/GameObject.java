@@ -50,11 +50,30 @@ public abstract class GameObject implements ObjectBehavior {
         void call(GameObject gameObject);
     }
 
+    // Execute a method for every gameObject in the tree
     public void executeForEvery(Callable callable) {
         for(GameObject gameObject : children) {
             gameObject.executeForEvery(callable);
         }
         callable.call(this);
+    }
+
+    public interface FindCondition {
+        boolean check(GameObject gameObject);
+    }
+
+    // Look for a GameObject with a specified condition
+    public GameObject find(FindCondition findCondition) {
+        if(findCondition.check(this)) {
+            return this;
+        }
+        for(GameObject gameObject : children) {
+            GameObject f = gameObject.find(findCondition);
+            if(f != null) {
+                return f;
+            }
+        }
+        return null;
     }
 
 }

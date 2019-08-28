@@ -19,6 +19,7 @@ public class MeshRenderer extends Component {
 
     public void use(){
         shader.use();
+        material.use(shader);
     }
 
     @Override

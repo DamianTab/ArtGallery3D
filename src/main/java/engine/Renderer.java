@@ -1,6 +1,7 @@
 package engine;
 
 import engine.components.Camera;
+import engine.components.LightSource;
 import engine.components.MeshFilter;
 import engine.components.MeshRenderer;
 import engine.graphics.shader.ShaderProgram;
@@ -25,7 +26,7 @@ public class Renderer {
                 if (meshRenderer != null && meshFilter != null) {
                     meshRenderer.use();
                     setUniforms(gameObject, meshRenderer.getShader(), camera);
-
+                    useLights(root, meshRenderer.getShader());
                     //Finally draw a mesh
                     meshFilter.getMesh().draw();
                 }
@@ -42,11 +43,31 @@ public class Renderer {
         return (Camera)cameraObject.getComponent(Component.Type.CAMERA);
     }
 
+    class IntegerWrapper {
+        public IntegerWrapper(int value) {
+            this.value = value;
+        }
+        int value;
+    }
+
+    public void useLights(GameObject root, ShaderProgram program) {
+        IntegerWrapper i = new IntegerWrapper(0);
+        root.executeForEvery((GameObject gameObject) -> {
+            Component c = gameObject.getComponent(Component.Type.LIGHT_SOURCE);
+            if(c != null) {
+                LightSource lightSource = (LightSource)c;
+                lightSource.use(program, i.value);
+                i.value++;
+            }
+        });
+    }
+
     //Set uniforms in shader
     private void setUniforms(GameObject o, ShaderProgram program, Camera camera) {
         glUniformMatrix4fv(program.getLocation("p_matrix"), false, FloatBufferUtils.matrix4ToFloatBuffer(camera.getPerspectiveMatrix()));
         glUniformMatrix4fv(program.getLocation("v_matrix"), false, FloatBufferUtils.matrix4ToFloatBuffer(camera.getViewMatrix()));
         glUniformMatrix4fv(program.getLocation("m_matrix"), false, FloatBufferUtils.matrix4ToFloatBuffer(o.getTransform().getAbsoluteMatrix()));
         glUniform3fv(program.getLocation("viewPos"), FloatBufferUtils.vector3ToFloatBuffer(camera.getTransform().getAbsolutePosition()));
+
     }
 }

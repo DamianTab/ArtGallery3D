@@ -1,6 +1,6 @@
 package artgellary;
 
-import engine.Time;
+import engine.utils.Time;
 import engine.components.Camera;
 import engine.components.Transform;
 import engine.models.GameObject;
@@ -13,7 +13,7 @@ public class MainCamera extends GameObject {
 
     @Override
     public void start() {
-        camera = new Camera(new Transform());
+        camera = new Camera();
         addComponent(camera);
     }
 

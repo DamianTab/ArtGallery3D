@@ -18,6 +18,8 @@ public class Room extends GameObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        addChild(new RoomLight());
     }
 
     @Override

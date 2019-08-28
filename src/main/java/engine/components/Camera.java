@@ -6,18 +6,25 @@ import lombok.Setter;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+
 public class Camera extends Component {
 
-    public Camera(Transform target) {
-        this.target = target;
+    public Camera() {
     }
 
     @Setter
-    private Transform target;
-
+    private Transform target = new Transform();
+    @Getter
+    @Setter
     private float fieldOfView = 90.0f;
+    @Getter
+    @Setter
     private float aspect = 1.0f;
+    @Getter
+    @Setter
     private float near = 0.5f;
+    @Getter
+    @Setter
     private float far = 100.0f;
 
     @Getter

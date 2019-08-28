@@ -14,6 +14,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.lwjgl.opengl.GL20.glUniform1f;
 import static org.lwjgl.opengl.GL20.glUniform3fv;
 
 @Data
@@ -26,6 +27,7 @@ public class Material {
     private Texture ambientMap;
     private Texture diffuseMap;
     private Texture specularMap;
+    private float shininess = 30.0f;
 
     public Material(String path) throws IOException {
         this.path = path;
@@ -49,6 +51,7 @@ public class Material {
         glUniform3fv(program.getLocation("material.ambientColor"), FloatBufferUtils.vector3ToFloatBuffer(ambientColor));
         glUniform3fv(program.getLocation("material.diffuseColor"), FloatBufferUtils.vector3ToFloatBuffer(diffuseColor));
         glUniform3fv(program.getLocation("material.specularColor"), FloatBufferUtils.vector3ToFloatBuffer(specularColor));
+        glUniform1f(program.getLocation("material.shininess"), shininess);
     }
 
     private void init() throws IOException {
@@ -71,6 +74,8 @@ public class Material {
                 diffuseMap = readTexture(split, Texture.Type.DIFFUSE);
             } else if(identifier.equals("map_Ks")) {
                 specularMap = readTexture(split, Texture.Type.SPECULAR);
+            } else if(identifier.equals("Ns")) {
+                shininess = Float.parseFloat(split[1]);
             }
         }
     }

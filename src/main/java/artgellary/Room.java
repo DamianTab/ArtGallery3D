@@ -13,8 +13,8 @@ public class Room extends GameObject {
     @Override
     public void start() {
         try {
-            addComponent(new MeshRenderer(new StandardShader(), new Material("obj/box/box.mtl")));
-            addComponent(new MeshFilter(new Mesh("obj/box/box.obj")));
+            addComponent(new MeshRenderer(new StandardShader(), new Material("obj/box/Box.mtl")));
+            addComponent(new MeshFilter(new Mesh("obj/box/Box.obj")));
         } catch (Exception e) {
             e.printStackTrace();
         }

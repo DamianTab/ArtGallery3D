@@ -1,6 +1,7 @@
 package engine.components;
 
 import engine.models.Component;
+import lombok.Getter;
 import lombok.Setter;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -8,8 +9,11 @@ import org.joml.Vector4f;
 
 public class Transform extends Component {
 
+    @Getter
     private Vector3f position = new Vector3f();
+    @Getter
     private Vector3f rotation = new Vector3f();
+    @Getter
     private Vector3f scale = new Vector3f(1.0f, 1.0f, 1.0f);
     private Matrix4f matrix;
     @Setter
@@ -22,6 +26,12 @@ public class Transform extends Component {
     public void setPosition(Vector3f position) {
         this.position = position;
         dirty = true;
+    }
+
+    public void shiftBy(Vector3f position) {
+        Vector3f result = new Vector3f();
+        getPosition().add(position, result);
+        setPosition(result);
     }
 
     public void setRotation(Vector3f rotation) {
@@ -38,21 +48,23 @@ public class Transform extends Component {
         Matrix4f matrix = new Matrix4f().identity();
         matrix.rotateXYZ(rotation);
         matrix.scale(scale);
-        matrix.transform(new Vector4f(position, 1.0f));
+        matrix.translate(position);
         return matrix;
     }
 
     public Matrix4f getMatrix() {
         if(dirty) {
             matrix = generateMatrix();
-            dirty = false;
+            dirty = true;
         }
         return matrix;
     }
 
     public Matrix4f getAbsoluteMatrix() {
         if(parent != null) {
-            return parent.getMatrix().mul(getMatrix());
+            Matrix4f result = new Matrix4f();
+            getMatrix().mul(parent.getAbsoluteMatrix(), result);
+            return result;
         }
         else {
             return getMatrix();
@@ -60,8 +72,13 @@ public class Transform extends Component {
     }
 
     public Vector3f getAbsolutePosition() {
-        Vector4f v = new Vector4f(position, 1.0f).mul(getAbsoluteMatrix());
-        return new Vector3f(v.x, v.y, v.z).div(v.w);
+        if(parent == null) {
+            return position;
+        }
+        else {
+            Vector4f v = new Vector4f(position, 1.0f).mul(parent.getAbsoluteMatrix());
+            return new Vector3f(v.x, v.y, v.z).div(v.w);
+        }
     }
 
     @Override

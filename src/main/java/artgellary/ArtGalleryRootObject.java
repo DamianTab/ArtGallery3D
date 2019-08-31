@@ -2,6 +2,7 @@ package artgellary;
 
 
 import engine.models.GameObject;
+import org.joml.Vector3f;
 
 public class ArtGalleryRootObject extends GameObject {
 
@@ -11,10 +12,8 @@ public class ArtGalleryRootObject extends GameObject {
         Room room = new Room();
         addChild(room);
 
-        MainCamera mainCamera = new MainCamera();
-        addChild(mainCamera);
-
-        mainCamera.setTarget(room.getTransform());
+        Player player = new Player();
+        addChild(player);
     }
 
     @Override

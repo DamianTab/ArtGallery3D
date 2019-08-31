@@ -1,15 +1,10 @@
 package artgellary;
 
-import engine.input.InputDetector;
-import engine.utils.Time;
+import engine.utils.InputDetector;
 import engine.components.Camera;
-import engine.components.Transform;
 import engine.models.GameObject;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
 public class MainCamera extends GameObject {
 
@@ -19,7 +14,6 @@ public class MainCamera extends GameObject {
     private float lastMouseX, lastMouseY;
     private float offsetX, offsetY;
     private float yaw, pitch;
-
     private final float mouse_sensitivity = 0.15f;
 
 
@@ -31,17 +25,15 @@ public class MainCamera extends GameObject {
 
     @Override
     public void update() {
-
-    updateMouse();
-    updateKeyboard();
-
+        updateMouse();
+        //updateKeyboard();
     }
 
     private void updateMouse(){
 
         Vector2f vector2f = InputDetector.getMousePosition();
-        float mouseX = vector2f.get(0);
-        float mouseY = vector2f.get(1);
+        float mouseX = vector2f.x;
+        float mouseY = vector2f.y;
 
 
         if (first){
@@ -64,13 +56,9 @@ public class MainCamera extends GameObject {
         if(pitch < -89.0f)
             pitch = -89.0f;
 
-        Vector3f front = new Vector3f(
-                (float)(java.lang.Math.cos(java.lang.Math.toRadians(yaw))* java.lang.Math.cos(java.lang.Math.toRadians(pitch))),
-                (float)(java.lang.Math.sin(java.lang.Math.toRadians(pitch))),
-                (float)(java.lang.Math.sin(java.lang.Math.toRadians(yaw))* java.lang.Math.cos(Math.toRadians(pitch))));
-        front.normalize();
-
-        camera.getTransform().setPosition(front);
+        float x = (float)Math.toRadians((double) pitch);
+        float y = (float)Math.toRadians((double) yaw);
+        getTransform().setRotation(new Vector3f(x, y, 0.0f));
     }
 
     private void updateKeyboard(){
@@ -142,9 +130,5 @@ public class MainCamera extends GameObject {
 //            camPos.sub(new Vector3f().set(camUp).normalize().mul((float)glfwGetTime()*movementSpeed));
 
 
-    }
-
-    public void setTarget(Transform target) {
-        camera.setTarget(target);
     }
 }

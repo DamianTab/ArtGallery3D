@@ -1,6 +1,7 @@
 package artgellary;
 
 
+import artgellary.shaders.ConstantShader;
 import artgellary.shaders.StandardShader;
 import engine.components.MeshFilter;
 import engine.components.MeshRenderer;

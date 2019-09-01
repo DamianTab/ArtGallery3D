@@ -40,7 +40,7 @@ public class Camera extends Component {
 
 
 
-    private Vector3f generateFrontVector() {
+    public Vector3f generateFrontVector() {
         Vector3f rotation = getTransform().getRotation();
         float yaw = rotation.y;
         float pitch = rotation.x;

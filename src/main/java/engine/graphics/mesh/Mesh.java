@@ -1,5 +1,7 @@
 package engine.graphics.mesh;
 
+import engine.graphics.material.Material;
+import engine.graphics.shader.ShaderProgram;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
@@ -14,17 +16,7 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class Mesh {
 
-    private int vaoId;
-    private int vboId;
-    private int eboId;
-
-    //After reading
-    private Vector3f[] positions;
-    private Vector3f[] normals;
-    private Vector2f[] uvs;
-
-    private Vertex[] vertices;
-    private int[] indices;
+    private List<MeshPart> parts = new ArrayList<>();
 
     public Mesh(String path) throws IOException {
         init(path);
@@ -32,7 +24,6 @@ public class Mesh {
 
     private void init(String path) throws IOException {
         read(path);
-        createBuffers();
     }
 
     // Read file content and save it to arrays;
@@ -43,6 +34,10 @@ public class Mesh {
         List<Vector2f> uvTempList = new ArrayList<>();
         List<VertexIndex> vertexIndicesTempList = new ArrayList<>();
         List<Integer> indexTempList = new ArrayList<>();
+        String materialName = null;
+
+
+        MeshPart part = null;
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(path)));
         String line;
@@ -78,7 +73,7 @@ public class Mesh {
                     for(VertexIndex vi : vertexIndicesTempList) {
                         if(vi.equals(vertexIndex)) {
                             // This is already present
-                            index = i;
+                            index = j;
                         }
                         j++;
                     }
@@ -98,76 +93,49 @@ public class Mesh {
                     indexTempList.add(faceIndices.get(i));
                 }
             }
+            else if(identifier.equals("usemtl")) {
+                if(vertexIndicesTempList.size() > 0) {
+                    part = generateMeshPart(vertexTempList, normalTempList, uvTempList, indexTempList, vertexIndicesTempList, materialName);
+                    parts.add(part);
+                }
+                materialName = split[1];
+            }
         }
+        part = generateMeshPart(vertexTempList, normalTempList, uvTempList, indexTempList, vertexIndicesTempList, materialName);
+        parts.add(part);
+    }
 
-        Vector3f[] verticesArray = new Vector3f[vertexTempList.size()];
-        positions = vertexTempList.toArray(verticesArray);
-        Vector3f[] normalsArray = new Vector3f[normalTempList.size()];
-        normals = normalTempList.toArray(normalsArray);
-        Vector2f[] uvArray = new Vector2f[uvTempList.size()];
-        uvs = uvTempList.toArray(uvArray);
-        indices = indexTempList.stream().mapToInt(integer->integer).toArray();
+    private MeshPart generateMeshPart(List<Vector3f> vertexTempList, List<Vector3f> normalTempList, List<Vector2f> uvTempList, List<Integer> indexTempList, List<VertexIndex> vertexIndicesTempList, String materialName) {
+        MeshPart result = new MeshPart();
+        result.setMaterialName(materialName);
+        result.setIndices(indexTempList.stream().mapToInt(integer->integer).toArray());
 
-        vertices = new Vertex[vertexIndicesTempList.size()];
+        Vertex[] vertices = new Vertex[vertexIndicesTempList.size()];
         int i = 0;
         for(VertexIndex vertexIndex : vertexIndicesTempList) {
-            Vector3f position = positions[vertexIndex.getPositionId() - 1];
-            Vector3f normal = normals[vertexIndex.getNormalId() - 1];
-            Vector2f uv = uvs[vertexIndex.getUvId() - 1];
+            Vector3f position = vertexTempList.get(vertexIndex.getPositionId() - 1);
+            Vector3f normal = normalTempList.get(vertexIndex.getNormalId() - 1);
+            Vector2f uv = uvTempList.get(vertexIndex.getUvId() - 1);
             vertices[i] = new Vertex(position, normal ,uv);
             i++;
         }
+        result.setVertices(vertices);
+        result.createBuffers();
 
+//        vertexTempList.clear();
+//        normalTempList.clear();
+//        uvTempList.clear();
+        indexTempList.clear();
+        vertexIndicesTempList.clear();
+        return result;
     }
 
-    private void createBuffers() {
-
-        vaoId = glGenVertexArrays();
-        vboId = glGenBuffers();
-        eboId = glGenBuffers();
-
-
-        FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(vertices.length*Vertex.floatCount());
-        for(Vertex vertex : vertices) {
-            vertex.addToBuffer(verticesBuffer);
+    public void draw(ShaderProgram program, Material material) {
+        for(MeshPart part : parts) {
+            material.getPart(part.getMaterialName()).use(program);
+            part.draw();
         }
-        verticesBuffer.flip();
-
-        IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
-        indicesBuffer.put(indices);
-        indicesBuffer.flip();
-
-        glBindVertexArray(vaoId);
-
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glEnableVertexAttribArray(0);
-        int floatSize = 4;
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.floatCount()*floatSize, 0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false,  Vertex.floatCount()*floatSize,  3*floatSize);
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, false,  Vertex.floatCount()*floatSize,  6*floatSize);
-
-        // Unbind
-        glBindVertexArray(0);
-
     }
 
-    private void bind()
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glBindVertexArray(vaoId);
-    }
 
-    public void draw() {
-        bind();
-        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
-    }
 }

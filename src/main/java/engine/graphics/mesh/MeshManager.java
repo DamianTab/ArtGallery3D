@@ -2,6 +2,8 @@ package engine.graphics.mesh;
 
 import engine.graphics.texture.Texture;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MeshManager {
@@ -31,9 +33,18 @@ public class MeshManager {
         return managerInstance;
     }
 
+    public Mesh getMesh(String path) throws IOException {
+        Mesh result = meshContainer.get(path);
+        if(result == null) {
+            result = new Mesh(path);
+            meshContainer.put(path, result);
+        }
+        return result;
+    }
+
     //    ----------------------------------------------------------------------
 
-    private Map<String, Texture> meshContainer;
+    private Map<String, Mesh> meshContainer = new HashMap<>();
 
 
 }

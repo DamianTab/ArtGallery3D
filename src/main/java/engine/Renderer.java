@@ -29,7 +29,7 @@ public class Renderer {
                     setUniforms(gameObject, meshRenderer.getShader(), camera);
                     useLights(root, meshRenderer.getShader());
                     //Finally draw a mesh
-                    meshFilter.getMesh().draw();
+                    meshFilter.getMesh().draw(meshRenderer.getShader(), meshRenderer.getMaterial());
                 }
             });
         }

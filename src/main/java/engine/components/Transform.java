@@ -46,9 +46,9 @@ public class Transform extends Component {
 
     private Matrix4f generateMatrix(){
         Matrix4f matrix = new Matrix4f().identity();
-        matrix.rotateXYZ(rotation);
-        matrix.scale(scale);
         matrix.translate(position);
+        matrix.scale(scale);
+        matrix.rotateXYZ(rotation);
         return matrix;
     }
 

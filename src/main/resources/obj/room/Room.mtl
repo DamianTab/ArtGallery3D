@@ -1,0 +1,27 @@
+# Blender MTL File: 'Room.blend'
+# Material Count: 2
+
+newmtl Material
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd WoodFlooringMahoganyAfricanSanded001_COL_3K.png
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+disp StoneBricksBeige015_DISP_3K.png
+map_Bump StoneBricksBeige015_NRM_3K.png
+map_Ka StoneBricksBeige015_AO_3K.png
+map_Kd StoneBricksBeige015_COL_3K.png

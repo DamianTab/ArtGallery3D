@@ -12,7 +12,11 @@ public class VertexIndex {
     public VertexIndex(String line) {
         String[] split = line.split("/");
         positionId = Integer.parseInt(split[0]);
-        uvId = Integer.parseInt(split[1]);
+        try {
+            uvId = Integer.parseInt(split[1]);
+        } catch (NumberFormatException e) {
+            uvId = 0;
+        }
         normalId = Integer.parseInt(split[2]);
     }
 

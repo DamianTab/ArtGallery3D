@@ -80,7 +80,7 @@ vec3 calcPointLight(LightSource light, vec3 normal, vec3 fragPos, vec3 viewDir) 
 
 void main() {
     vec3 normal = i_normal;
-    //normal = normalize(normal * 2.0 - 1.0);
+    normal = normalize(normal);
 
     vec3 viewDir = normalize(viewPos - i_fragPos);
 

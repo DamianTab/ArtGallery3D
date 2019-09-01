@@ -43,6 +43,7 @@ public class Material {
         MaterialPart part = null;
         String partName = null;
         while ((line = bufferedReader.readLine()) != null) {
+            line = line.trim();
             String[] split = line.split(" ");
             String identifier = split[0];
             if (identifier.equals("newmtl")) {

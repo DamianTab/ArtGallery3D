@@ -42,7 +42,7 @@ public class Mesh {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(path)));
         String line;
         while((line = bufferedReader.readLine()) != null) {
-            String[] split = line.split(" ");
+            String[] split = line.split("[ ]+");
             String identifier = split[0];
             // Vertex
             if(identifier.equals("v")) {
@@ -54,7 +54,15 @@ public class Mesh {
             }
             // UV
             else if(identifier.equals("vt")) {
-                Vector2f uv = new Vector2f(Float.parseFloat(split[1]), Float.parseFloat(split[2]));
+                Vector2f uv = new Vector2f();
+                uv.x = Float.parseFloat(split[1]);
+                // Support for models created in 3DS Max
+                if(split.length > 3) {
+                    uv.y = 1 - Float.parseFloat(split[2]);
+                }
+                else {
+                    uv.y = Float.parseFloat(split[2]);
+                }
                 uvTempList.add(uv);
             }
             // Normal

@@ -44,11 +44,15 @@ public class Transform extends Component {
         dirty = true;
     }
 
+    public void setScale(float scalar) {
+        setScale(new Vector3f(scalar, scalar, scalar));
+    }
+
     private Matrix4f generateMatrix(){
         Matrix4f matrix = new Matrix4f().identity();
         matrix.translate(position);
-        matrix.scale(scale);
         matrix.rotateXYZ(rotation);
+        matrix.scale(scale);
         return matrix;
     }
 
@@ -63,7 +67,7 @@ public class Transform extends Component {
     public Matrix4f getAbsoluteMatrix() {
         if(parent != null) {
             Matrix4f result = new Matrix4f();
-            getMatrix().mul(parent.getAbsoluteMatrix(), result);
+            parent.getAbsoluteMatrix().mul(getMatrix(), result);
             return result;
         }
         else {

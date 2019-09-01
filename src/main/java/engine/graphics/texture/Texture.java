@@ -80,9 +80,9 @@ public class Texture {
             case AMBIENT:
                 return PNGDecoder.Format.ALPHA;
             case DIFFUSE:
-                return PNGDecoder.Format.RGBA;
+                return PNGDecoder.Format.BGRA;
             case SPECULAR:
-                return PNGDecoder.Format.RGBA;
+                return PNGDecoder.Format.BGRA;
         }
         return null;
     }

@@ -1,4 +1,4 @@
-package artgellary;
+package artgellary.room;
 
 import engine.components.MeshFilter;
 import engine.components.MeshRenderer;
@@ -7,6 +7,9 @@ import engine.models.GameObject;
 import org.joml.Vector3f;
 
 public class Observer extends GameObject {
+
+    Painting target;
+
     @Override
     public void start() {
         try {
@@ -17,6 +20,12 @@ public class Observer extends GameObject {
         }
 
         getTransform().setScale(0.015f);
+    }
+
+
+
+    public void goToPainting(Painting target) {
+        this.target = target;
     }
 
     @Override

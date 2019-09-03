@@ -1,4 +1,4 @@
-package artgellary;
+package artgellary.room;
 
 import engine.components.LightSource;
 import engine.models.GameObject;

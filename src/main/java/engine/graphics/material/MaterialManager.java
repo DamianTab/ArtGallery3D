@@ -34,10 +34,10 @@ public class MaterialManager {
         return managerInstance;
     }
 
-    public Material getMaterial(String path) throws IOException {
-        Material result = materialContainer.get(path);
+    public MaterialFile getMaterial(String path) throws IOException {
+        MaterialFile result = materialContainer.get(path);
         if(result == null) {
-            result = new Material(path);
+            result = new MaterialFile(path);
             materialContainer.put(path, result);
         }
         return result;
@@ -45,7 +45,7 @@ public class MaterialManager {
 
     //    ----------------------------------------------------------------------
 
-    private Map<String, Material> materialContainer = new HashMap<>();
+    private Map<String, MaterialFile> materialContainer = new HashMap<>();
 
 
 

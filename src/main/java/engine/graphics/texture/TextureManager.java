@@ -1,5 +1,11 @@
 package engine.graphics.texture;
 
+import engine.graphics.material.MaterialFile;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 //todo
@@ -30,7 +36,21 @@ public class TextureManager {
         return managerInstance;
     }
 
+    public Texture getTexture(String path, Texture.Type type) throws IOException {
+        Texture result = null;
+        for(Texture tex : textureContainer) {
+            if(tex.getPath().equals(path) && tex.getType() == type) {
+                result = tex;
+            }
+        }
+        if(result == null) {
+            result = new Texture(path, type);
+            textureContainer.add(result);
+        }
+        return result;
+    }
+
     //    ----------------------------------------------------------------------
 
-    private Map<String, Texture> textureContainer;
+    private List<Texture> textureContainer = new ArrayList<>();
 }

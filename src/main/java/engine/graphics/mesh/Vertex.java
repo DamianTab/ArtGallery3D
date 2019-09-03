@@ -25,10 +25,6 @@ public class Vertex {
         buffer.put(uv.y);
     }
 
-    // How much memory does this structure takes
-    public static int size() {
-        return Float.SIZE * floatCount();
-    }
     // How many floats does this structure uses
     public static int floatCount() {return 3 + 3 + 2;}
 }

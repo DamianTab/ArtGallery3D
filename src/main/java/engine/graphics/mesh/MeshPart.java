@@ -78,12 +78,10 @@ public class MeshPart {
     private void bind()
     {
         glBindVertexArray(vaoId);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboId);
-//        glBindBuffer(GL_ARRAY_BUFFER, vboId);
     }
 
     private  void unbind() {
-        glBindVertexArray(9);
+        glBindVertexArray(0);
     }
 
     public void draw() {

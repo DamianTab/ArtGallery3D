@@ -23,7 +23,7 @@ public class MaterialPart {
     @Setter
     private Texture specularMap;
     @Setter
-    private float shininess = 30.0f;
+    private float shininess = 50.0f;
 
     public void use(ShaderProgram program) {
 

@@ -33,18 +33,25 @@ public class MeshManager {
         return managerInstance;
     }
 
-    public Mesh getMesh(String path) throws IOException {
-        Mesh result = meshContainer.get(path);
+    public MeshFile getMesh(String path) throws IOException {
+        MeshFile result = meshContainer.get(path);
         if(result == null) {
-            result = new Mesh(path);
+            result = new MeshFile(path);
             meshContainer.put(path, result);
         }
         return result;
     }
 
+    public PlaneMesh getPlaneMesh() {
+        if(planeMesh == null) {
+            planeMesh = new PlaneMesh();
+        }
+        return planeMesh;
+    }
+
     //    ----------------------------------------------------------------------
 
-    private Map<String, Mesh> meshContainer = new HashMap<>();
-
+    private Map<String, MeshFile> meshContainer = new HashMap<>();
+    private PlaneMesh planeMesh;
 
 }

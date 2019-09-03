@@ -2,6 +2,7 @@ package engine.graphics.texture;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import engine.graphics.shader.ShaderProgram;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,9 @@ import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 public class Texture {
 
     private int id;
+    @Getter
     private Type type;
+    @Getter
     private String path;
 
     //The type will determine which texture unit to use
@@ -42,10 +45,17 @@ public class Texture {
     private void init() throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
         // We use PNGDecoder to decode png file to BGRA format.
-        PNGDecoder decoder = new PNGDecoder(inputStream);
-        ByteBuffer buf = ByteBuffer.allocateDirect(4*decoder.getWidth()*decoder.getHeight());
-        decoder.decode(buf, decoder.getWidth()*4, getDecoderFormat());
-        buf.flip();
+        PNGDecoder decoder = null;
+        ByteBuffer buf = null;
+        try {
+            decoder = new PNGDecoder(inputStream);
+            buf = ByteBuffer.allocateDirect(4 * decoder.getWidth() * decoder.getHeight());
+            decoder.decode(buf, decoder.getWidth() * 4, getDecoderFormat());
+            buf.flip();
+        }
+        catch (NullPointerException e) {
+            System.err.println("Invalid format: "  + path);
+        }
 
         activateTextureUnit();
         id = glGenTextures();

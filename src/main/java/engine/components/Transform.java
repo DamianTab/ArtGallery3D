@@ -16,6 +16,7 @@ public class Transform extends Component {
     @Getter
     private Vector3f scale = new Vector3f(1.0f, 1.0f, 1.0f);
     private Matrix4f matrix;
+    @Getter
     @Setter
     private Transform parent;
     private boolean dirty = true;
@@ -81,6 +82,32 @@ public class Transform extends Component {
         }
         else {
             Vector4f v = new Vector4f(position, 1.0f).mul(parent.getAbsoluteMatrix());
+            return new Vector3f(v.x, v.y, v.z).div(v.w);
+        }
+    }
+
+    // Get matrix relative to the transform p
+    public Matrix4f getRelativeMatrix(Transform p) {
+        if(parent == null) {
+            return null;
+        }
+        else if(parent == p) {
+            return getMatrix();
+        }
+        else {
+            Matrix4f result = new Matrix4f();
+            parent.getRelativeMatrix(p).mul(getMatrix(), result);
+            return result;
+        }
+    }
+
+    // Get position relative to given parent p
+    public Vector3f getRelativePosition(Transform p) {
+        if(parent == null) {
+            return null;
+        }
+        else {
+            Vector4f v = new Vector4f(position, 1.0f).mul(parent.getRelativeMatrix(p));
             return new Vector3f(v.x, v.y, v.z).div(v.w);
         }
     }

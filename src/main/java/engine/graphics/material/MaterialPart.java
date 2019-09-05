@@ -2,12 +2,12 @@ package engine.graphics.material;
 
 import engine.graphics.shader.ShaderProgram;
 import engine.graphics.texture.Texture;
+import engine.graphics.texture.TextureManager;
 import engine.utils.FloatBufferUtils;
 import lombok.Setter;
 import org.joml.Vector3f;
 
-import static org.lwjgl.opengl.GL20.glUniform1f;
-import static org.lwjgl.opengl.GL20.glUniform3fv;
+import static org.lwjgl.opengl.GL20.*;
 
 public class MaterialPart {
     @Setter
@@ -28,14 +28,15 @@ public class MaterialPart {
     public void use(ShaderProgram program) {
 
         // Use textures
-        if(ambientMap != null) {
-            ambientMap.use(program);
-        }
-        if(diffuseMap != null) {
+        if (diffuseMap != null) {
             diffuseMap.use(program);
+        } else {
+            TextureManager.getInstance().getDefaultDiffuse().use(program);
         }
-        if(specularMap != null) {
+        if (specularMap != null) {
             specularMap.use(program);
+        } else {
+            TextureManager.getInstance().getDefaultSpeculart().use(program);
         }
 
         // Set texture colors

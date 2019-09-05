@@ -20,12 +20,6 @@ public class Painting  extends GameObject {
         addChild(canvas);
     }
 
-    public Vector3f getObservePosition() {
-        Vector3f result = new Vector3f();
-        getTransform().getPosition().add(new Vector3f(), result);
-        return result;
-    }
-
     @Override
     public void update() {
 

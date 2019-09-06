@@ -23,6 +23,8 @@ public class MaterialPart {
     @Setter
     private Texture specularMap;
     @Setter
+    private Texture normalMap;
+    @Setter
     private float shininess = 50.0f;
 
     public void use(ShaderProgram program) {
@@ -38,11 +40,18 @@ public class MaterialPart {
         } else {
             TextureManager.getInstance().getDefaultSpeculart().use(program);
         }
+        if(normalMap != null) {
+            normalMap.use(program);
+        }
 
         // Set texture colors
         glUniform3fv(program.getLocation("material.ambientColor"), FloatBufferUtils.vector3ToFloatBuffer(ambientColor));
         glUniform3fv(program.getLocation("material.diffuseColor"), FloatBufferUtils.vector3ToFloatBuffer(diffuseColor));
         glUniform3fv(program.getLocation("material.specularColor"), FloatBufferUtils.vector3ToFloatBuffer(specularColor));
         glUniform1f(program.getLocation("material.shininess"), shininess);
+    }
+
+    public boolean requiresTangentSpace() {
+        return normalMap != null;
     }
 }

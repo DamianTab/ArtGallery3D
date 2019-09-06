@@ -47,6 +47,8 @@ public class MaterialFile extends Material {
                 part.setDiffuseMap(readTexture(split, Texture.Type.DIFFUSE));
             } else if (identifier.equals("map_Ks")) {
                 part.setSpecularMap(readTexture(split, Texture.Type.SPECULAR));
+            } else if (identifier.equals("map_Bump")) {
+                part.setNormalMap(readTexture(split, Texture.Type.NORMAL));
             } else if (identifier.equals("Ns")) {
                 part.setShininess(Float.parseFloat(split[1]));
             }

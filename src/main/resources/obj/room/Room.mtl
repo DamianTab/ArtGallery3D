@@ -11,6 +11,7 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd WoodFlooringMahoganyAfricanSanded001_COL_3K.png
+map_Bump WoodFlooringMahoganyAfricanSanded001_NRM_3K.png
 
 newmtl Material.001
 Ns 96.078431

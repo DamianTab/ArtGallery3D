@@ -46,6 +46,10 @@ public class ShaderManager {
         return getShader("glsl/standard/v_standard.glsl", "glsl/standard/f_standard.glsl");
     }
 
+    public ShaderProgram getNormalMappingShader() throws Exception {
+        return getShader("glsl/normalMapping/v_normal.glsl", "glsl/normalMapping/f_normal.glsl");
+    }
+
     public ShaderProgram getConstantShader() throws Exception {
         return getShader("glsl/constant/v_constant.glsl", "glsl/constant/f_constant.glsl");
     }

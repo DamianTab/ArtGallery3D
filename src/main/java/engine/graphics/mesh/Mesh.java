@@ -1,6 +1,7 @@
 package engine.graphics.mesh;
 
 import engine.graphics.material.Material;
+import engine.graphics.material.MaterialPart;
 import engine.graphics.material.SingleMaterial;
 import engine.graphics.shader.ShaderProgram;
 import org.joml.Vector2f;
@@ -25,17 +26,26 @@ public class Mesh {
 
     public void draw(ShaderProgram program, Material material) {
         if(material instanceof SingleMaterial) {
-            ((SingleMaterial)material).getMaterial().use(program);
+            SingleMaterial singleMaterial = ((SingleMaterial)material);
+            singleMaterial.getMaterial().use(program);
             for(MeshPart part : parts) {
-                part.draw();
+                drawMeshPart(part, singleMaterial.getMaterial());
             }
         }
         else {
             for(MeshPart part : parts) {
-                material.getPart(part.getMaterialName()).use(program);
-                part.draw();
+                MaterialPart materialPart = material.getPart(part.getMaterialName());
+                materialPart.use(program);
+                drawMeshPart(part, materialPart);
             }
         }
+    }
+
+    private void drawMeshPart(MeshPart meshPath, MaterialPart materialPart) {
+        if(materialPart.requiresTangentSpace()) {
+            meshPath.calculateTangents();
+        }
+        meshPath.draw();
     }
 
 

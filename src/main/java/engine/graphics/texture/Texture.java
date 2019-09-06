@@ -27,7 +27,7 @@ public class Texture {
 
     //The type will determine which texture unit to use
     public enum Type {
-        AMBIENT, DIFFUSE, SPECULAR
+        AMBIENT, DIFFUSE, SPECULAR, NORMAL
     }
 
     public Texture(String path, Type type) throws IOException {
@@ -74,11 +74,11 @@ public class Texture {
     }
 
     private int getInternalFormat(Type type) {
-        // If this is a normal texture then use gamma correlation
+        // If this is a normalMapping texture then use gamma correlation
         if(type == Type.DIFFUSE) {
             return GL_SRGB8_ALPHA8;
         }
-        // Else use normal formal
+        // Else use normalMapping formal
         else {
             return GL_RGBA;
         }
@@ -93,6 +93,8 @@ public class Texture {
                 return PNGDecoder.Format.BGRA;
             case SPECULAR:
                 return PNGDecoder.Format.BGRA;
+            case NORMAL:
+                return PNGDecoder.Format.BGRA;
         }
         return null;
     }
@@ -106,6 +108,8 @@ public class Texture {
                 return "material.diffuseMap";
             case SPECULAR:
                 return "material.specularMap";
+            case NORMAL:
+                return "material.normalMap";
         }
         return null;
     }

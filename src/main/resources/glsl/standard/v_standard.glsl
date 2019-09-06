@@ -21,5 +21,4 @@ void main(){
     i_fragPos = vec3( m_matrix * vertexPosition4);
     i_normal = mat3(transpose(inverse(m_matrix)))*vertexNormal;
     i_texCoord = texCoord;
-    //i_viewPos = vec3(m_matrix * vec4(viewPos, 1.0f));
 }

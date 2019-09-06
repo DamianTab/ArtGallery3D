@@ -11,8 +11,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import java.util.Random;
-
 public class Room extends GameObject {
 
     public static final float MESH_WIDTH = 8.0f;
@@ -23,7 +21,7 @@ public class Room extends GameObject {
     @Override
     public void start() {
         try {
-            addComponent(new MeshRenderer(ShaderManager.getInstance().getStandardShader(),"obj/room/Room.mtl"));
+            addComponent(new MeshRenderer(ShaderManager.getInstance().getNormalMappingShader(),"obj/room/Room.mtl"));
             addComponent(new MeshFilter("obj/room/Room.obj"));
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,6 @@
 package engine;
 
-import engine.input.InputDetector;
+import engine.utils.InputDetector;
 import engine.models.GameObject;
 import engine.models.ObjectBehavior;
 import engine.utils.Time;
@@ -14,8 +14,9 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_SRGB;
 public abstract class Application {
 
     public abstract GameObject getRoot();
+    public abstract WindowHandler getWindowHandler();
 
-    private WindowHandler windowHandler = new WindowHandler("Art Gallery 3D", 1200, 900);
+    private WindowHandler windowHandler = getWindowHandler();
     private GameObject root;
     private Renderer renderer = new Renderer();
 
@@ -29,7 +30,10 @@ public abstract class Application {
     }
 
     private void init() {
+
         windowHandler.init();
+        InputDetector.windowHandler = windowHandler;
+        InputDetector.start();
     }
 
     private void loop() {
@@ -47,16 +51,16 @@ public abstract class Application {
         root = getRoot();
 
         // Set the clear color
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !windowHandler.shouldClose() ) {
             Time.startTickFPS();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the Framebuffer
 
             //Update mouse input
-            InputDetector.updateInputDevices(windowHandler.getWindow());
+            InputDetector.update();
 
             //Logic here
             root.executeForEvery(ObjectBehavior::update);

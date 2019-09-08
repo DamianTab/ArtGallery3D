@@ -36,9 +36,6 @@ public class WindowHandler {
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
 
-        // LWJGL performs additional, more expensive checks, when the debug mode is enabled
-        Configuration.DEBUG.set(true);
-
         // Initialize GLFW. Most GLFW functions will not work before doing this.
         if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");

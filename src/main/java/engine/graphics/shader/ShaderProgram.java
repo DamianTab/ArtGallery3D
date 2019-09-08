@@ -1,15 +1,24 @@
 package engine.graphics.shader;
 
+import lombok.Getter;
+
 import static org.lwjgl.opengl.GL20.*;
 
+// A set of shaders (fragment and vertex)
 public class ShaderProgram {
     private int id;
+    @Getter
+    private String vertexPath;
+    @Getter
+    private String fragmentPath;
 
     public ShaderProgram(String vertexPath, String fragmentPath) throws Exception {
-        init(vertexPath, fragmentPath);
+        this.vertexPath = vertexPath;
+        this.fragmentPath = fragmentPath;
+        init();
     }
 
-    private void init(String vertexPath, String fragmentPath) throws Exception {
+    private void init() throws Exception {
         id = glCreateProgram();
         if (id == 0) {
             throw new Exception("Could not create Shader");
@@ -32,11 +41,16 @@ public class ShaderProgram {
         }
     }
 
+    //Get uniform location based on its name
     public int getLocation(String attribute) {
         return glGetUniformLocation(id, attribute);
     }
 
     public void use() {
         glUseProgram(id);
+    }
+
+    public boolean equals(ShaderProgram other) {
+        return vertexPath.equals(other.vertexPath) && fragmentPath.equals(other.fragmentPath);
     }
 }

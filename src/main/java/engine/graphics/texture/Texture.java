@@ -2,6 +2,7 @@ package engine.graphics.texture;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import engine.graphics.shader.ShaderProgram;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,12 +20,14 @@ import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 public class Texture {
 
     private int id;
+    @Getter
     private Type type;
+    @Getter
     private String path;
 
     //The type will determine which texture unit to use
     public enum Type {
-        AMBIENT, DIFFUSE, SPECULAR
+        AMBIENT, DIFFUSE, SPECULAR, NORMAL
     }
 
     public Texture(String path, Type type) throws IOException {
@@ -42,10 +45,17 @@ public class Texture {
     private void init() throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(path);
         // We use PNGDecoder to decode png file to BGRA format.
-        PNGDecoder decoder = new PNGDecoder(inputStream);
-        ByteBuffer buf = ByteBuffer.allocateDirect(4*decoder.getWidth()*decoder.getHeight());
-        decoder.decode(buf, decoder.getWidth()*4, getDecoderFormat());
-        buf.flip();
+        PNGDecoder decoder = null;
+        ByteBuffer buf = null;
+        try {
+            decoder = new PNGDecoder(inputStream);
+            buf = ByteBuffer.allocateDirect(4 * decoder.getWidth() * decoder.getHeight());
+            decoder.decode(buf, decoder.getWidth() * 4, getDecoderFormat());
+            buf.flip();
+        }
+        catch (NullPointerException e) {
+            System.err.println("Invalid format: "  + path);
+        }
 
         activateTextureUnit();
         id = glGenTextures();
@@ -64,11 +74,11 @@ public class Texture {
     }
 
     private int getInternalFormat(Type type) {
-        // If this is a normal texture then use gamma correlation
+        // If this is a normalMapping texture then use gamma correlation
         if(type == Type.DIFFUSE) {
             return GL_SRGB8_ALPHA8;
         }
-        // Else use normal formal
+        // Else use normalMapping formal
         else {
             return GL_RGBA;
         }
@@ -80,9 +90,11 @@ public class Texture {
             case AMBIENT:
                 return PNGDecoder.Format.ALPHA;
             case DIFFUSE:
-                return PNGDecoder.Format.RGBA;
+                return PNGDecoder.Format.BGRA;
             case SPECULAR:
-                return PNGDecoder.Format.RGBA;
+                return PNGDecoder.Format.BGRA;
+            case NORMAL:
+                return PNGDecoder.Format.BGRA;
         }
         return null;
     }
@@ -96,6 +108,8 @@ public class Texture {
                 return "material.diffuseMap";
             case SPECULAR:
                 return "material.specularMap";
+            case NORMAL:
+                return "material.normalMap";
         }
         return null;
     }

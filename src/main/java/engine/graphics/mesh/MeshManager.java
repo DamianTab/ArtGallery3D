@@ -2,6 +2,8 @@ package engine.graphics.mesh;
 
 import engine.graphics.texture.Texture;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MeshManager {
@@ -31,9 +33,25 @@ public class MeshManager {
         return managerInstance;
     }
 
+    public MeshFile getMesh(String path) throws IOException {
+        MeshFile result = meshContainer.get(path);
+        if(result == null) {
+            result = new MeshFile(path);
+            meshContainer.put(path, result);
+        }
+        return result;
+    }
+
+    public PlaneMesh getPlaneMesh() {
+        if(planeMesh == null) {
+            planeMesh = new PlaneMesh();
+        }
+        return planeMesh;
+    }
+
     //    ----------------------------------------------------------------------
 
-    private Map<String, Texture> meshContainer;
-
+    private Map<String, MeshFile> meshContainer = new HashMap<>();
+    private PlaneMesh planeMesh;
 
 }

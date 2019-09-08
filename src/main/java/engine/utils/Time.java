@@ -2,9 +2,10 @@ package engine.utils;
 
 public class Time {
     private static int framesCounter=0;
-    public static long timeElapsed=0;
     private static long startTick;
     private static long endTick;
+    public static long TIME_ELAPSED=0;
+    public static long DELTA_TIME=0;
 
     //Mówi o precyzji pomiaru
     private final static long precision = 1_000_000_000;
@@ -17,28 +18,21 @@ public class Time {
     //Dajemy na koncu petli
     public static void endTickFPS(){
         endTick = System.nanoTime();
-        timeElapsed += getDeltaTime();
+        DELTA_TIME = (endTick - startTick)/(1000*1000);
+        TIME_ELAPSED += DELTA_TIME;
     }
 
 
     public static void showFPS(){
 
-        if (timeElapsed>precision){
-            System.out.println("FPS:   "+(float) framesCounter/timeElapsed * precision);
-            timeElapsed=0;
+        if (TIME_ELAPSED>precision){
+            System.out.println("FPS:   "+(float) framesCounter/TIME_ELAPSED * precision);
+            TIME_ELAPSED=0;
             framesCounter=0;
         }else{
-            timeElapsed += endTick-startTick;
+            TIME_ELAPSED += endTick-startTick;
             framesCounter++;
         }
 
-    }
-
-    public static long getDeltaTime(){
-        return (endTick - startTick) * precision;
-    }
-
-    public static long getTimeElapsedMillis() {
-        return timeElapsed/1000000;
     }
 }

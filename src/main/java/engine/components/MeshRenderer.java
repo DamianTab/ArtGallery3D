@@ -1,10 +1,13 @@
 package engine.components;
 
 import engine.graphics.material.Material;
+import engine.graphics.material.MaterialManager;
 import engine.graphics.mesh.Mesh;
 import engine.graphics.shader.ShaderProgram;
 import engine.models.Component;
 import lombok.Data;
+
+import java.io.IOException;
 
 @Data
 public class MeshRenderer extends Component {
@@ -14,12 +17,15 @@ public class MeshRenderer extends Component {
         this.shader = shader;
     }
 
+    public MeshRenderer(ShaderProgram shader, String materialPath) throws IOException {
+        this(shader, MaterialManager.getInstance().getMaterial(materialPath));
+    }
+
     private Material material;
     private ShaderProgram shader;
 
     public void use(){
         shader.use();
-        material.use(shader);
     }
 
     @Override

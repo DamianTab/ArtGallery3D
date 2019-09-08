@@ -1,7 +1,10 @@
 package engine.graphics.material;
 
+import engine.graphics.mesh.Mesh;
 import engine.graphics.texture.Texture;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MaterialManager {
@@ -31,9 +34,18 @@ public class MaterialManager {
         return managerInstance;
     }
 
+    public MaterialFile getMaterial(String path) throws IOException {
+        MaterialFile result = materialContainer.get(path);
+        if(result == null) {
+            result = new MaterialFile(path);
+            materialContainer.put(path, result);
+        }
+        return result;
+    }
+
     //    ----------------------------------------------------------------------
 
-    private Map<String, Texture> materialContainer;
+    private Map<String, MaterialFile> materialContainer = new HashMap<>();
 
 
 

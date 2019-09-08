@@ -15,6 +15,7 @@ import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL20.*;
 
+// Klasa renderująca obiekt
 public class Renderer {
 
     public void draw(GameObject root){
@@ -24,9 +25,13 @@ public class Renderer {
             root.executeForEvery((GameObject gameObject) -> {
                 MeshRenderer meshRenderer = (MeshRenderer) gameObject.getComponent(Component.Type.MESH_RENDERER);
                 MeshFilter meshFilter = (MeshFilter) gameObject.getComponent(Component.Type.MESH_FILTER);
+                // Draw only is material and mesh are present
                 if (meshRenderer != null && meshFilter != null) {
+                    // Use shader
                     meshRenderer.use();
+                    // Set main uniforms
                     setUniforms(gameObject, meshRenderer.getShader(), camera);
+                    // Set light uniforms
                     useLights(root, meshRenderer.getShader());
                     //Finally draw a mesh
                     meshFilter.getMesh().draw(meshRenderer.getShader(), meshRenderer.getMaterial());

@@ -4,6 +4,7 @@ import engine.models.GameObject;
 import engine.utils.Rand;
 import org.joml.Vector3f;
 
+// Obiekt opisujący miejsce w którym wisi obraz. Potrzebny jest on do ustawienia ludzika w prawidłowe miejsce (poniewaz ma stała współrzędną y)
 public class PaintingSpot extends GameObject {
     @Override
     public void start() {

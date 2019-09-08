@@ -8,6 +8,7 @@ import org.joml.Vector3f;
 import java.io.*;
 import java.nio.file.Paths;
 
+// Class representing a single material file (mtl)
 public class MaterialFile extends Material {
 
     @Getter

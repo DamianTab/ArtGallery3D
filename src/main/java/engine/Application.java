@@ -57,7 +57,7 @@ public abstract class Application {
         // the window or has pressed the ESCAPE key.
         while ( !windowHandler.shouldClose() ) {
             Time.startTickFPS();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the Framebuffer
 
             //Update mouse input
             InputDetector.update();

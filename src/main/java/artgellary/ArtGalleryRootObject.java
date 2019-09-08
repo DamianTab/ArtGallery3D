@@ -5,8 +5,10 @@ import artgellary.room.Room;
 import engine.models.GameObject;
 import org.joml.Vector3f;
 
+//Główny obiekt
 public class ArtGalleryRootObject extends GameObject {
 
+    //Mapa składa się z 4 pokoi.
     Room[] rooms;
 
     @Override
@@ -25,6 +27,7 @@ public class ArtGalleryRootObject extends GameObject {
             rooms[i].getTransform().setPosition(new Vector3f(x, 0.0f, z));
         }
 
+        //Dodanie gracza który się porusza
         Player player = new Player();
         addChild(player);
     }

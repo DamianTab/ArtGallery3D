@@ -65,6 +65,7 @@ public class Transform extends Component {
         return matrix;
     }
 
+    // Get transform matrix relative to the world
     public Matrix4f getAbsoluteMatrix() {
         if(parent != null) {
             Matrix4f result = new Matrix4f();
@@ -76,6 +77,7 @@ public class Transform extends Component {
         }
     }
 
+    // Get position relative to the world
     public Vector3f getAbsolutePosition() {
         if(parent == null) {
             return position;

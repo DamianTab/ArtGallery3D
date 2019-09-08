@@ -5,6 +5,7 @@ import engine.utils.Rand;
 import lombok.Getter;
 import org.joml.Vector3f;
 
+// Obiekt opisujący zbiór obrazów na jednej ścianie.
 public class PaintingWall extends GameObject {
 
     @Getter

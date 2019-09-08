@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import static org.lwjgl.opengl.GL20.*;
 
+// A set of shaders (fragment and vertex)
 public class ShaderProgram {
     private int id;
     @Getter
@@ -40,6 +41,7 @@ public class ShaderProgram {
         }
     }
 
+    //Get uniform location based on its name
     public int getLocation(String attribute) {
         return glGetUniformLocation(id, attribute);
     }

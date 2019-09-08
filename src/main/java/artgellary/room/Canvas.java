@@ -16,6 +16,7 @@ import org.joml.Vector3f;
 
 import java.io.IOException;
 
+// Obiekt opisujący płótno czyli obrazek wewnątrz ramki.
 public class Canvas extends GameObject {
 
     public final static int PAINTING_NUMBER = 11;
@@ -43,6 +44,7 @@ public class Canvas extends GameObject {
 
     }
 
+    // Obrazek jest losowany z puli
     private Texture getRandomPainting() throws IOException {
         int index = Rand.RANDOM.nextInt(PAINTING_NUMBER) + 1;
         return TextureManager.getInstance().getTexture("paintings/p" + index + ".png", Texture.Type.DIFFUSE);

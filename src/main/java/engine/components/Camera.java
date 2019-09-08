@@ -6,21 +6,28 @@ import lombok.Setter;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-
+// Kamera definiowana jest pozycja i rotacją z transforma
 public class Camera extends Component {
 
     public Camera() {
     }
 
+    // Kąt widzenia
     @Getter
     @Setter
     private float fieldOfView = 90.0f;
+
+    // Stosunek wymiarów ekranu (najlepiej jakby były identyczne)
     @Getter
     @Setter
     private float aspect = 1.0f;
+
+    // Bliskowzroczność
     @Getter
     @Setter
     private float near = 0.1f;
+
+    // Dalekowzroczność
     @Getter
     @Setter
     private float far = 100.0f;
@@ -30,6 +37,7 @@ public class Camera extends Component {
     @Getter
     private Matrix4f perspectiveMatrix;
 
+    // Generowanie macierzy widoku i perspektywy
     public void generateViewAndPerspective() {
         Vector3f eye = getTransform().getAbsolutePosition();
         Vector3f target = new Vector3f();
@@ -39,9 +47,13 @@ public class Camera extends Component {
     }
 
 
-
+    //Generowanie znormalizowanego wektora w kierunku patrzenia.
     public Vector3f generateFrontVector() {
         Vector3f rotation = getTransform().getRotation();
+        // Użycie systemu yaw/pitch
+        // yaw - obrót w lewo i prawo
+        // pitch - obrót w góre i w dół
+        // Obrót kamery wokół osi z nie jest potrzebny w tym projekcie.
         float yaw = rotation.y;
         float pitch = rotation.x;
         return new Vector3f(

@@ -6,6 +6,7 @@ import engine.graphics.shader.ShaderManager;
 import engine.models.GameObject;
 import org.joml.Vector3f;
 
+// Obiekt opisujący obraz wraz z ramą.
 public class Painting  extends GameObject {
     @Override
     public void start() {

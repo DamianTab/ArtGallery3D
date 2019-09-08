@@ -6,8 +6,8 @@ import engine.graphics.shader.ShaderManager;
 import engine.models.GameObject;
 import engine.utils.Time;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
+// Obiekt opisujący postać poruszajacą się w pomieszczeniu i patrzącą się na obrazy.
 public class Observer extends GameObject {
 
     private final float speed = 0.0005f;

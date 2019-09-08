@@ -11,6 +11,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+// Obiekt opisujący pokój wraz z korytarzami. Jest ich 4 i każdy kolejny jest obrózony o 90 stopni.
 public class Room extends GameObject {
 
     public static final float MESH_WIDTH = 8.0f;

@@ -24,6 +24,7 @@ public class Vertex {
     private Vector3f tangent;
     private Vector3f bitangent;
 
+    // Put vertex data into buffer
     public void addToBuffer(FloatBuffer buffer) {
         buffer.put(position.x);
         buffer.put(position.y);

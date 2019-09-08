@@ -5,6 +5,7 @@ import engine.models.GameObject;
 import engine.utils.Time;
 import org.joml.Vector3f;
 
+// Obiekt opisujący oświetlenie pokoju
 public class RoomLight extends GameObject {
     @Override
     public void start() {

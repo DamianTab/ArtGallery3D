@@ -9,6 +9,7 @@ import org.joml.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+// Obiekt opisujący postać którym steruje gracz.
 public class Player extends GameObject {
 
     MainCamera mainCamera;
@@ -29,10 +30,12 @@ public class Player extends GameObject {
     private void move() {
         Camera camera = mainCamera.getCamera();
         Vector3f front = new Vector3f();
+        // Pobranie wektora na wprost kamery.
         front.add(camera.generateFrontVector());
+        // Pomnożenie go przez prędkość
         front.mul(Time.DELTA_TIME*speed);
         Vector3f shift = new Vector3f();
-        //shift.add()
+        // Współrzędna y jest niezmieniana (oznaczało by to że postać może latać!)
         if(InputDetector.isKeyPressed(GLFW_KEY_W)) {
             shift.add(new Vector3f(front.x , 0.0f, front.z));
         }

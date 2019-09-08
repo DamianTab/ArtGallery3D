@@ -17,6 +17,7 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
 
+// Actual mesh with vertices
 public class MeshPart {
     private int vaoId;
     private int vboId;
@@ -40,18 +41,24 @@ public class MeshPart {
         insertBufferData();
     }
 
+    // Insert current vertices to buffers
     private void insertBufferData() {
+
+        // Crete float buffer for vertices data
         FloatBuffer verticesBuffer = MemoryUtil.memAllocFloat(vertices.length*Vertex.floatCount());
         for(Vertex vertex : vertices) {
             vertex.addToBuffer(verticesBuffer);
         }
         verticesBuffer.flip();
 
+        // Create int buffer for indices data
         IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
         indicesBuffer.put(indices);
         indicesBuffer.flip();
 
         glBindVertexArray(vaoId);
+
+        //Insert vertices and indices buffers
 
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
@@ -60,6 +67,9 @@ public class MeshPart {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
+
+        //Set vertex attributes in order: position, normal, uv, tangent, bitangent
+
         int floatSize = 4;
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.floatCount()*floatSize, 0);
@@ -87,18 +97,24 @@ public class MeshPart {
 
     public void draw() {
         bind();
+        // Draw Elements: each vertex has its own index and can be drawn multiple times.
         glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
         unbind();
     }
 
+    // Only call when needed: Calculate tangents and bitangents of normal vector
+    // This is only needed to create tbn matrix.
+    // Po polsku są to prostopadłe do wektora normalnego tak aby zdefiniować przestrzeń wektora normalnego jako koordynaty x, y ,z
     public void calculateTangents() {
         if(!tangentsCalculated) {
             for (int i = 0; i < indices.length; i += 3) {
+
+                // Each triangle has the same normal so the tangents and bitangets will be the same.
                 Vertex v1 = vertices[indices[i]];
                 Vertex v2 = vertices[indices[i + 1]];
                 Vertex v3 = vertices[indices[i + 2]];
 
-
+                // The math behind this is complicated
                 Vector3f edge1 = new Vector3f();
                 Vector3f edge2 = new Vector3f();
                 Vector2f deltaUV1 = new Vector2f();
@@ -120,6 +136,8 @@ public class MeshPart {
                 bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
                 bitangent.normalize();
 
+                // Each vertex can be used multiple times so we take an average tangent and bitangent to achieve a smooth effect.
+                // One way to do this is to add all tangents and bitangents and then normalise them.
                 v1.getTangent().add(tangent);
                 v1.getBitangent().add(bitangent);
                 v2.getTangent().add(tangent);
@@ -131,6 +149,7 @@ public class MeshPart {
                 v.getTangent().normalize();
                 v.getBitangent().normalize();
             }
+            // We need to update new vertex data in buffers
             insertBufferData();
             tangentsCalculated = true;
         }

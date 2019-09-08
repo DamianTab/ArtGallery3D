@@ -2,6 +2,7 @@ package engine.graphics.mesh;
 
 import lombok.Data;
 
+// Helper class containing indices of position, normal and uv
 @Data
 public class VertexIndex {
 

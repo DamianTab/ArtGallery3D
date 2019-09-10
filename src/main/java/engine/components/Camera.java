@@ -25,7 +25,7 @@ public class Camera extends Component {
     // Bliskowzroczność
     @Getter
     @Setter
-    private float near = 0.1f;
+    private float near = 0.01f;
 
     // Dalekowzroczność
     @Getter
@@ -43,7 +43,7 @@ public class Camera extends Component {
         Vector3f target = new Vector3f();
         eye.add(generateFrontVector(), target);
         viewMatrix = new Matrix4f().identity().lookAt(eye, target, new Vector3f(0.0f, 1.0f, 0.0f));
-        perspectiveMatrix = new Matrix4f().identity().perspective(fieldOfView, aspect, near, far);
+        perspectiveMatrix = new Matrix4f().identity().perspective((float)Math.toRadians(fieldOfView), aspect, near, far);
     }
 
 

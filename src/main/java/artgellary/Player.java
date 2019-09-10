@@ -29,24 +29,26 @@ public class Player extends GameObject {
 
     private void move() {
         Camera camera = mainCamera.getCamera();
-        Vector3f front = new Vector3f();
+        Vector3f front3D = new Vector3f();
         // Pobranie wektora na wprost kamery.
-        front.add(camera.generateFrontVector());
+        front3D.add(camera.generateFrontVector());
+        // Przeniesienie go na dwa wymiary
+        Vector2f front2D = new Vector2f(front3D.x, front3D.z).normalize();
         // Pomnożenie go przez prędkość
-        front.mul(Time.DELTA_TIME*speed);
+        front2D.mul(Time.DELTA_TIME*speed);
         Vector3f shift = new Vector3f();
         // Współrzędna y jest niezmieniana (oznaczało by to że postać może latać!)
         if(InputDetector.isKeyPressed(GLFW_KEY_W)) {
-            shift.add(new Vector3f(front.x , 0.0f, front.z));
+            shift.add(new Vector3f(front2D.x , 0.0f, front2D.y));
         }
         if(InputDetector.isKeyPressed(GLFW_KEY_S)) {
-            shift.add(new Vector3f(-front.x , 0.0f, -front.z));
+            shift.add(new Vector3f(-front2D.x , 0.0f, -front2D.y));
         }
         if(InputDetector.isKeyPressed(GLFW_KEY_D)) {
-            shift.add(new Vector3f(-front.z , 0.0f, front.x));
+            shift.add(new Vector3f(-front2D.y , 0.0f, front2D.x));
         }
         if(InputDetector.isKeyPressed(GLFW_KEY_A)) {
-            shift.add(new Vector3f(front.z , 0.0f, -front.x));
+            shift.add(new Vector3f(front2D.y , 0.0f, -front2D.x));
         }
         getTransform().shiftBy(shift);
     }

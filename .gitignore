@@ -50,11 +50,11 @@ _deps
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
- .idea/modules.xml
- .idea/*.iml
- .idea/modules
- *.iml
- *.ipr
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+*.iml
+*.ipr
 
 # CMake
 cmake-build-*/
@@ -92,10 +92,8 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
- *.iml
- modules.xml
- .idea/misc.xml
- *.ipr
+modules.xml
+.idea/misc.xml
 
 # Sonarlint plugin
 .idea/sonarlint
@@ -224,3 +222,6 @@ gradle-app.setting
 
 ### Gradle Patch ###
 **/build/
+
+#Custom settings - Damian 11.09.2019
+.idea

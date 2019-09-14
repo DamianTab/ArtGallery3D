@@ -1,6 +1,6 @@
 #version 330 core
 
-#define MAX_LIGHTS 5 //Maximum number of point lights
+#define MAX_LIGHTS 4 //Maximum number of point lights
 
 struct Material {
     vec3 ambientColor;
@@ -20,6 +20,7 @@ struct LightSource {
     vec3 diffuseColor;
     vec3 specularColor;
     vec3 position;
+    samplerCube shadowCubeMap;
 };
 
 uniform mat4 p_matrix;
@@ -28,12 +29,29 @@ uniform mat4 m_matrix;
 uniform Material material;
 uniform LightSource lights[MAX_LIGHTS];
 uniform vec3 viewPos;
+uniform float farPlane;
 
 out vec4 color;
 
 in vec3 i_fragPos;
 in vec2 i_texCoord;
 in vec3 i_normal;
+
+float shadowCalculation(vec3 fragPos, LightSource light) {
+    // get vector between fragment position and light position
+    vec3 fragToLight = fragPos - light.position;
+    // use the light to fragment vector to sample from the depth map
+    float closestDepth = texture(light.shadowCubeMap, fragToLight).r;
+    // it is currently in linear range between [0,1]. Re-transform back to original value
+    closestDepth *= farPlane;
+    // now get current linear depth as the length between the fragment and light position
+    float currentDepth = length(fragToLight);
+    // now test for shadows
+    float bias = 0.05;
+    float shadow = currentDepth -  bias > closestDepth ? 1.0 : 0.0;
+
+    return shadow;
+}
 
 
 vec3 calcPointLight(LightSource light, vec3 normal, vec3 fragPos, vec3 viewDir) {
@@ -55,7 +73,8 @@ vec3 calcPointLight(LightSource light, vec3 normal, vec3 fragPos, vec3 viewDir) 
     ambient  *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
-    return (ambient + diffuse + specular);
+    float shadow = shadowCalculation(fragPos, light);
+    return (ambient + (1.0 - shadow)*(diffuse + specular));
 }
 
 void main() {

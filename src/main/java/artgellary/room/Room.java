@@ -1,9 +1,12 @@
 package artgellary.room;
 
 
+import engine.components.Camera;
+import engine.components.LightSource;
 import engine.components.MeshFilter;
 import engine.components.MeshRenderer;
 import engine.graphics.shader.ShaderManager;
+import engine.models.Component;
 import engine.models.GameObject;
 import engine.utils.Rand;
 import engine.utils.Time;
@@ -18,17 +21,18 @@ public class Room extends GameObject {
     private Observer observer;
     private float counter = 100000;
     private PaintingWall[] paintingWalls;
+    private RoomLight roomLight;
 
     @Override
     public void start() {
         try {
-            addComponent(new MeshRenderer(ShaderManager.getInstance().getNormalMappingShader(),"obj/room/Room.mtl"));
+            addComponent(new MeshRenderer(ShaderManager.getInstance().getStandardShader(),"obj/room/Room.mtl"));
             addComponent(new MeshFilter("obj/room/Room.obj"));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        RoomLight roomLight = new RoomLight();
+        roomLight = new RoomLight();
         addChild(roomLight);
 
         observer = new Observer();
@@ -40,6 +44,11 @@ public class Room extends GameObject {
             addChild(paintingWalls[i]);
             paintingWalls[i].getTransform().setRotation(new Vector3f(0.0f, (i + 1)*(float)Math.PI/2.0f, 0.0f));
         }
+    }
+
+    public void prepareLight(Camera camera) {
+        LightSource lightSource = (LightSource)roomLight.getComponent(Component.Type.LIGHT_SOURCE);
+        lightSource.renderCubeMap(this, camera);
     }
 
 

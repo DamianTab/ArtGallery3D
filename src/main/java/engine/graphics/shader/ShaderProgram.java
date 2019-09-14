@@ -3,6 +3,7 @@ package engine.graphics.shader;
 import lombok.Getter;
 
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 
 // A set of shaders (fragment and vertex)
 public class ShaderProgram {
@@ -11,11 +12,18 @@ public class ShaderProgram {
     private String vertexPath;
     @Getter
     private String fragmentPath;
+    @Getter
+    private String geometryPath;
 
-    public ShaderProgram(String vertexPath, String fragmentPath) throws Exception {
+    public ShaderProgram(String vertexPath, String fragmentPath, String geometryPath) throws Exception {
+        this.geometryPath = geometryPath;
         this.vertexPath = vertexPath;
         this.fragmentPath = fragmentPath;
         init();
+    }
+
+    public ShaderProgram(String vertexPath, String fragmentPath) throws Exception {
+        this(vertexPath, fragmentPath, null);
     }
 
     private void init() throws Exception {
@@ -29,6 +37,11 @@ public class ShaderProgram {
 
         Shader fragment = new Shader(fragmentPath, GL_FRAGMENT_SHADER);
         fragment.attach(id);
+
+        if(geometryPath != null) {
+            Shader geometry = new Shader(geometryPath, GL_GEOMETRY_SHADER);
+            geometry.attach(id);
+        }
 
         glLinkProgram(id);
         if (glGetProgrami(id, GL_LINK_STATUS) == 0) {

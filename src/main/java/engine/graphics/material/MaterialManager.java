@@ -1,8 +1,5 @@
 package engine.graphics.material;
 
-import engine.graphics.mesh.Mesh;
-import engine.graphics.texture.Texture;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

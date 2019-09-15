@@ -26,7 +26,7 @@ public class Room extends GameObject {
     @Override
     public void start() {
         try {
-            addComponent(new MeshRenderer(ShaderManager.getInstance().getStandardShader(),"obj/room/Room.mtl"));
+            addComponent(new MeshRenderer(ShaderManager.getInstance().getNormalMappingShader(),"obj/room/Room.mtl"));
             addComponent(new MeshFilter("obj/room/Room.obj"));
         } catch (Exception e) {
             e.printStackTrace();

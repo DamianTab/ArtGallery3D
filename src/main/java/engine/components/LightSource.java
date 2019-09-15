@@ -90,8 +90,8 @@ public class LightSource extends Component {
 
     private Matrix4f[]  generateShadowMatrices() {
         float aspect = 1.0f;
-        float near = 1.0f;
-        float far = 25.0f;
+        float near = 0.01f;
+        float far = 100.0f;
         Vector3f lightPos = getTransform().getAbsolutePosition();
 
         Matrix4f shadowProj = new Matrix4f().identity().perspective((float)Math.toRadians(90.0),aspect, near, far);

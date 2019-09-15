@@ -49,7 +49,6 @@ float shadowCalculation(vec3 fragPos, LightSource light) {
     // now test for shadows
     float bias = 0.05;
     float shadow = currentDepth -  bias > closestDepth ? 1.0 : 0.0;
-
     return shadow;
 }
 

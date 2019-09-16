@@ -23,7 +23,7 @@ public class Camera extends Component {
     // Stosunek wymiarów ekranu (najlepiej jakby były identyczne)
     @Getter
     @Setter
-    private float aspect = 1.0f;
+    private float aspect = 2.0f;
 
     // Bliskowzroczność
     @Getter

@@ -31,6 +31,7 @@ public class ArtGalleryRootObject extends GameObject {
         //Dodanie gracza który się porusza
         player = new Player();
         addChild(player);
+        player.setRootObject(this);
     }
 
     @Override

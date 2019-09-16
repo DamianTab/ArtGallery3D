@@ -72,8 +72,8 @@ public abstract class Application {
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
-
             Time.endTickFPS();
+            Time.showFPS();
         }
     }
 }

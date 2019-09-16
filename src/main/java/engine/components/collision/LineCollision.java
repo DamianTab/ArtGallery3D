@@ -3,11 +3,12 @@ package engine.components.collision;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class RectangleCollision extends Collider {
+public class LineCollision extends Collider {
 
-    private float length;
-    private float width;
-
+    private float x1;
+    private float y1;
+    private float x2;
+    private float y2;
 
     @Override
     public boolean isCollision(Collider collider) {

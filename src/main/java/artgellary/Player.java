@@ -22,6 +22,11 @@ public class Player extends GameObject {
     MainCamera mainCamera;
     float speed = 0.0035f;
 
+    public Player(GameObject rootObject) {
+        super();
+        this.rootObject = rootObject;
+    }
+
     @Override
     public void start() {
         mainCamera = new MainCamera();
@@ -73,8 +78,6 @@ public class Player extends GameObject {
                 if(c != null) {
                     Collider testCollider = (Collider) c;
                     if(playerCollider.isCollision(testCollider)){
-                        shift.set(0f);
-                        System.out.println("KOLIZJA");
                         return;
                     }
                 }

@@ -1,7 +1,7 @@
 package engine.graphics.material;
 
 import engine.graphics.shader.ShaderProgram;
-import engine.graphics.texture.Texture;
+import engine.graphics.texture.FileTexture;
 import engine.graphics.texture.TextureManager;
 import engine.utils.FloatBufferUtils;
 import lombok.Setter;
@@ -17,13 +17,13 @@ public class MaterialPart {
     @Setter
     private Vector3f specularColor = new Vector3f(1.0f, 1.0f, 1.0f);
     @Setter
-    private Texture ambientMap;
+    private FileTexture ambientMap;
     @Setter
-    private Texture diffuseMap;
+    private FileTexture diffuseMap;
     @Setter
-    private Texture specularMap;
+    private FileTexture specularMap;
     @Setter
-    private Texture normalMap;
+    private FileTexture normalMap;
     @Setter
     private float shininess = 50.0f;
 

@@ -44,6 +44,12 @@ public class Mesh {
         }
     }
 
+    public void draw() {
+        for(MeshPart part : parts) {
+            part.draw();
+        }
+    }
+
     private void drawMeshPart(MeshPart meshPath, MaterialPart materialPart) {
         // If material has normal maps then use calculate tangents and bitangents
         if(materialPart.requiresTangentSpace()) {

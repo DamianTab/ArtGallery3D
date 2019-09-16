@@ -29,6 +29,10 @@ public class ShaderManager {
     }
 
     public ShaderProgram getShader(String vertex, String fragment) throws Exception {
+        return getShader(vertex, fragment, null);
+    }
+
+    public ShaderProgram getShader(String vertex, String fragment, String geometry) throws Exception {
         ShaderProgram result = null;
         for(ShaderProgram shaderProgram : shaderContainer) {
             if(shaderProgram.getVertexPath().equals(vertex) && shaderProgram.getFragmentPath().equals(fragment)) {
@@ -36,7 +40,7 @@ public class ShaderManager {
             }
         }
         if(result == null) {
-            result = new ShaderProgram(vertex, fragment);
+            result = new ShaderProgram(vertex, fragment, geometry);
             shaderContainer.add(result);
         }
         return result;

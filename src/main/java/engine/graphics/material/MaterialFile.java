@@ -1,6 +1,6 @@
 package engine.graphics.material;
 
-import engine.graphics.texture.Texture;
+import engine.graphics.texture.FileTexture;
 import engine.graphics.texture.TextureManager;
 import lombok.Getter;
 import org.joml.Vector3f;
@@ -43,13 +43,13 @@ public class MaterialFile extends Material {
             } else if (identifier.equals("Ks")) {
                 part.setSpecularColor(readColor(split));
             } else if (identifier.equals("map_Ka")) {
-                part.setAmbientMap(readTexture(split, Texture.Type.AMBIENT));
+                part.setAmbientMap(readTexture(split, FileTexture.Type.AMBIENT));
             } else if (identifier.equals("map_Kd")) {
-                part.setDiffuseMap(readTexture(split, Texture.Type.DIFFUSE));
+                part.setDiffuseMap(readTexture(split, FileTexture.Type.DIFFUSE));
             } else if (identifier.equals("map_Ks")) {
-                part.setSpecularMap(readTexture(split, Texture.Type.SPECULAR));
+                part.setSpecularMap(readTexture(split, FileTexture.Type.SPECULAR));
             } else if (identifier.equals("map_Bump")) {
-                part.setNormalMap(readTexture(split, Texture.Type.NORMAL));
+                part.setNormalMap(readTexture(split, FileTexture.Type.NORMAL));
             } else if (identifier.equals("Ns")) {
                 part.setShininess(Float.parseFloat(split[1]));
             }
@@ -66,7 +66,7 @@ public class MaterialFile extends Material {
         return new Vector3f(x, y, z);
     }
 
-    private Texture readTexture(String[] split, Texture.Type type) throws IOException {
+    private FileTexture readTexture(String[] split, FileTexture.Type type) throws IOException {
         String texName = split[1];
         String parent = Paths.get(path).getParent().toString();
         String texPath = parent + File.separatorChar + texName;

@@ -18,7 +18,7 @@ public abstract class Application {
 
     private WindowHandler windowHandler = getWindowHandler();
     private GameObject root;
-    private Renderer renderer = new Renderer();
+    private Renderer renderer;
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -49,6 +49,7 @@ public abstract class Application {
         glEnable(GL_FRAMEBUFFER_SRGB);
 
         root = getRoot();
+        renderer = new Renderer(windowHandler);
 
         // Set the clear color
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);

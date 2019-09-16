@@ -8,6 +8,7 @@ import org.lwjgl.system.Configuration;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 
@@ -17,7 +18,9 @@ public class WindowHandler {
     @Setter
     private boolean resized = false;
     private final String title;
+    @Getter
     private int width;
+    @Getter
     private int height;
 
 
@@ -109,5 +112,9 @@ public class WindowHandler {
         // Terminate GLFW and free the error callback
         glfwTerminate();
         glfwSetErrorCallback(null).free();
+    }
+
+    public void setViewPort() {
+        glViewport(0, 0, width, height);
     }
 }

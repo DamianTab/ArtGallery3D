@@ -1,24 +1,21 @@
 package engine.graphics.texture;
 
-import engine.graphics.material.MaterialFile;
 import lombok.Getter;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 //todo
 public class TextureManager {
 
     //Singletone Implementation
     private static volatile TextureManager managerInstance;
-    private List<Texture> textureContainer = new ArrayList<>();
+    private List<FileTexture> textureContainer = new ArrayList<>();
     @Getter
-    private Texture defaultDiffuse;
+    private FileTexture defaultDiffuse;
     @Getter
-    private Texture defaultSpeculart;
+    private FileTexture defaultSpeculart;
 
     //private constructor.
     private TextureManager(){
@@ -28,8 +25,8 @@ public class TextureManager {
         }
 
         try {
-            this.defaultDiffuse = getTexture("defaultTextures/diffuse.png", Texture.Type.DIFFUSE);
-            this.defaultSpeculart = getTexture("defaultTextures/specular.png", Texture.Type.SPECULAR);
+            this.defaultDiffuse = getTexture("defaultTextures/diffuse.png", FileTexture.Type.DIFFUSE);
+            this.defaultSpeculart = getTexture("defaultTextures/specular.png", FileTexture.Type.SPECULAR);
         } catch (IOException e) {
             System.err.println("Failed to load defualt textures!");
         }
@@ -49,17 +46,24 @@ public class TextureManager {
         return managerInstance;
     }
 
-    public Texture getTexture(String path, Texture.Type type) throws IOException {
-        Texture result = null;
-        for(Texture tex : textureContainer) {
+    public FileTexture getTexture(String path, FileTexture.Type type) throws IOException {
+        FileTexture result = null;
+        for(FileTexture tex : textureContainer) {
             if(tex.getPath().equals(path) && tex.getType() == type) {
                 result = tex;
             }
         }
         if(result == null) {
-            result = new Texture(path, type);
+            result = new FileTexture(path, type);
             textureContainer.add(result);
         }
+        return result;
+    }
+
+    private int depthID = 0;
+    public DepthCubeMap nextDepthMap() {
+        DepthCubeMap result = new DepthCubeMap(depthID);
+        depthID++;
         return result;
     }
 

@@ -1,10 +1,13 @@
 package engine.components;
 
+import engine.graphics.shader.ShaderProgram;
 import engine.models.Component;
 import lombok.Getter;
 import lombok.Setter;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+
+import static org.lwjgl.opengl.GL20.glUniform1f;
 
 // Kamera definiowana jest pozycja i rotacją z transforma
 public class Camera extends Component {
@@ -25,12 +28,12 @@ public class Camera extends Component {
     // Bliskowzroczność
     @Getter
     @Setter
-    private float near = 0.01f;
+    private float near = 0.001f;
 
     // Dalekowzroczność
     @Getter
     @Setter
-    private float far = 100.0f;
+    private float far = 1000.0f;
 
     @Getter
     private Matrix4f viewMatrix;
@@ -61,6 +64,10 @@ public class Camera extends Component {
                 (float) (Math.sin(pitch)),
                 (float) (Math.sin(yaw) * Math.cos(pitch))).normalize();
 
+    }
+
+    public void setFarPlaneUniform(ShaderProgram shaderProgram) {
+        glUniform1f(shaderProgram.getLocation("farPlane"), far);
     }
 
     @Override

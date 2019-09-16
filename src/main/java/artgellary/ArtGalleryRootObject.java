@@ -10,6 +10,7 @@ public class ArtGalleryRootObject extends GameObject {
 
     //Mapa składa się z 4 pokoi.
     Room[] rooms;
+    Player player;
 
     @Override
     public void start() {
@@ -28,13 +29,15 @@ public class ArtGalleryRootObject extends GameObject {
         }
 
         //Dodanie gracza który się porusza
-        Player player = new Player();
+        player = new Player();
         addChild(player);
     }
 
     @Override
     public void update() {
-
+        for(int i = 0; i < 4; i++) {
+            rooms[i].prepareLight(player.mainCamera.getCamera());
+        }
     }
 
 }

@@ -18,7 +18,7 @@ public class Player extends GameObject {
 
     @Setter
     private GameObject rootObject;
-    private CircleCollision collider;
+    private CircleCollision playerCollider;
     MainCamera mainCamera;
     float speed = 0.0035f;
 
@@ -26,8 +26,8 @@ public class Player extends GameObject {
     public void start() {
         mainCamera = new MainCamera();
         addChild(mainCamera);
-        collider = new CircleCollision(0.5f);
-        addComponent(collider);
+        playerCollider = new CircleCollision(0.5f);
+        addComponent(playerCollider);
 
         getTransform().setPosition(new Vector3f(4.0f, 1.0f, -4.0f));
     }
@@ -36,7 +36,7 @@ public class Player extends GameObject {
     public void update() {
         move();
         //todo comment
-        System.out.println(getTransform().getAbsolutePosition());
+//        System.out.println(getTransform().getAbsolutePosition());
     }
 
     private void move() {
@@ -63,6 +63,8 @@ public class Player extends GameObject {
             shift.add(new Vector3f(front2D.y , 0.0f, -front2D.x));
         }
 
+        getTransform().shiftBy(shift);
+
 
         //COLLIDER ENGINE
         rootObject.executeForEvery((GameObject gameObject)->{
@@ -70,12 +72,13 @@ public class Player extends GameObject {
                 Component c = gameObject.getComponent(Component.Type.COLLIDER);
                 if(c != null) {
                     Collider testCollider = (Collider) c;
-                    collider.isCollision(testCollider);
-                    shift.set(0f);
-                    //lol
+                    if(playerCollider.isCollision(testCollider)){
+                        shift.set(0f);
+                        System.out.println("KOLIZJA");
+                        return;
+                    }
                 }
             }
         });
-        getTransform().shiftBy(shift);
     }
 }

@@ -2,6 +2,8 @@ package artgellary;
 
 
 import artgellary.room.Room;
+import engine.components.collision.Collider;
+import engine.components.collision.LineCollision;
 import engine.models.GameObject;
 import org.joml.Vector3f;
 
@@ -17,6 +19,7 @@ public class ArtGalleryRootObject extends GameObject {
         rooms = new Room[4];
         for(int i = 0; i < 4; i++) {
             rooms[i] = new Room();
+            rooms[i].addComponent(new LineCollision(-2,-2,2,-2));
             addChild(rooms[i]);
             float rotation = (float)Math.toRadians(90.0*i);
             float radius = (float)Math.sqrt(2)*Room.MESH_WIDTH/2.0f;

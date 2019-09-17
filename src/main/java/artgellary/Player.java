@@ -31,7 +31,7 @@ public class Player extends GameObject {
     public void start() {
         mainCamera = new MainCamera();
         addChild(mainCamera);
-        playerCollider = new CircleCollision(0.5f);
+        playerCollider = new CircleCollision(0.3f);
         addComponent(playerCollider);
 
         getTransform().setPosition(new Vector3f(4.0f, 1.0f, -4.0f));
@@ -40,12 +40,12 @@ public class Player extends GameObject {
     @Override
     public void update() {
         move();
-        //todo comment
-//        System.out.println(getTransform().getAbsolutePosition());
     }
 
     private void move() {
         Camera camera = mainCamera.getCamera();
+        Vector3f oldPosition = new Vector3f().add(getTransform().getAbsolutePosition());
+
         Vector3f front3D = new Vector3f();
         // Pobranie wektora na wprost kamery.
         front3D.add(camera.generateFrontVector());
@@ -78,6 +78,8 @@ public class Player extends GameObject {
                 if(c != null) {
                     Collider testCollider = (Collider) c;
                     if(playerCollider.isCollision(testCollider)){
+                        System.out.println("KOLIZJA");
+                        getTransform().setPosition(oldPosition);
                         return;
                     }
                 }

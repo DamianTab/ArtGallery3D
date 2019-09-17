@@ -14,6 +14,9 @@ public class ArtGalleryRootObject extends GameObject {
     //Mapa składa się z 4 pokoi.
     Room[] rooms;
     Player player;
+    float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
+    float [] wallsCollidersPosition = { 0f,-2f  ,2f,0   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    - };
+
 
     @Override
     public void start() {
@@ -30,9 +33,15 @@ public class ArtGalleryRootObject extends GameObject {
             rooms[i].getTransform().setRotation(new Vector3f(0.0f, rotation, 0.0f));
             rooms[i].getTransform().setPosition(new Vector3f(x, 0.0f, z));
 
-                ColliderWall colliderWall = new ColliderWall(4);
+            for (int j = 0; j < wallsCollidersSize.length; j++) {
+                System.out.println(j/2);
+                ColliderWall colliderWall = new ColliderWall(wallsCollidersSize[j/2]);
                 rooms[i].addChild(colliderWall);
                 colliderWall.getTransform().setPosition(new Vector3f(0f, 0f, -2f));
+
+            }
+
+
 
         }
 

@@ -35,7 +35,6 @@ public class CircleCollision extends Collider {
 
             //Jesli wspolrzedne pasują to sprawdza odległość od tego odcinka - gdy jest mniejsza lub rowna to jest kolizja
             if (distance <= radius) {
-                System.out.println(line.getX1() +"  " +line.getZ1() +"  " +line.getX2() +"  " +line.getZ2());
                 return true;
             }else {
                 return false;

@@ -15,17 +15,25 @@ public class CircleCollision extends Collider {
 
         if (collider instanceof LineCollision){
             LineCollision line = (LineCollision) collider;
+            //Wazna linijka ktora oblicza wszystkie wspołrzedne względem świata
+            line.recalculatePosition();
+
+            //Sprawdza czy współrzedne gracza sa w danym odcinku
             if (line.getX1() == line.getX2()){
-                if (!isBetween(line.getZ1(), line.getZ2(), z))
+                if (!isBetween(line.getZ1(), line.getZ2(), z)){
                     return false;
+                }
+
             }else {
-                if (!isBetween(line.getX1(), line.getX2(), x))
+                if (!isBetween(line.getX1(), line.getX2(), x)){
                     return false;
+                }
             }
 
-            float distance = Math.abs(line.getA()*x + line.getB()*z + line.getC())
-                    / (float) Math.sqrt(line.getA() * line.getA() + line.getB() * line.getB());
+            //Obliczanie odleglosci od prostej w postaci ogólnej
+            float distance = line.getDistanceFromPoint(x,z);
 
+            //Jesli wspolrzedne pasują to sprawdza odległość od tego odcinka - gdy jest mniejsza lub rowna to jest kolizja
             if (distance <= radius) {
                 System.out.println(line.getX1() +"  " +line.getZ1() +"  " +line.getX2() +"  " +line.getZ2());
                 return true;
@@ -33,7 +41,7 @@ public class CircleCollision extends Collider {
                 return false;
             }
         }
-        //Not support collider
+        //Not supported collider
         else {
             throw new IllegalStateException();
         }

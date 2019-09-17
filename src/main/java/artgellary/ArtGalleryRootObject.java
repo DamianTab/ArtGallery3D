@@ -30,10 +30,9 @@ public class ArtGalleryRootObject extends GameObject {
             rooms[i].getTransform().setRotation(new Vector3f(0.0f, rotation, 0.0f));
             rooms[i].getTransform().setPosition(new Vector3f(x, 0.0f, z));
 
-            ColliderWall colliderWall = new ColliderWall(-2,2,2,2);
-            rooms[i].addChild(colliderWall);
-            colliderWall.recalculate();
-
+                ColliderWall colliderWall = new ColliderWall(4);
+                rooms[i].addChild(colliderWall);
+                colliderWall.getTransform().setPosition(new Vector3f(0f, 0f, -2f));
 
         }
 

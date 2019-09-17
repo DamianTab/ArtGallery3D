@@ -1,56 +1,65 @@
 package engine.components.collision;
 
-import artgellary.room.ColliderWall;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.joml.Vector3f;
 
+
 @Getter
+@RequiredArgsConstructor
 public class LineCollision extends Collider {
+
+    private boolean shouldInitialize = true;
+    private final float length;
 
     private float x1;
     private float z1;
     private float x2;
     private float z2;
 
-//    Równanie prostej ogólne
+    //    Równanie prostej ogólne
     private float A;
     private float B;
     private float C;
 
-    public LineCollision(float x1, float z1, float x2, float z2) {
-        this.x1 = x1;
-        this.z1 = z1;
-        this.x2 = x2;
-        this.z2 = z2;
-    }
 
     public void recalculatePosition() {
 
-//        Vector3f firstPoint = new Vector3f();
-//        Vector3f secondPoint = new Vector3f();
-//
-//        //Przepisanie rotacji z komponentu wyżej
-//        Vector3f lol = gameObject.getTransform().getParent().getRotation();
-//        gameObject.getTransform().setRotation(lol);
-//
-//        gameObject.getTransform().getParent().getPosition().add(x1,0,z1, firstPoint);
-//        gameObject.getTransform().setPosition(firstPoint);
-//        this.x1 = gameObject.getTransform().getAbsolutePosition().x;
-//        this.z1 = gameObject.getTransform().getAbsolutePosition().z;
-//
-//        gameObject.getTransform().getParent().getPosition().add(x2,0,z2, secondPoint);
-//        gameObject.getTransform().setPosition(secondPoint);
-//        this.x2 = gameObject.getTransform().getAbsolutePosition().x;
-//        this.z2 = gameObject.getTransform().getAbsolutePosition().z;
+        if (!shouldInitialize) return;
 
-        this.x1 = gameObject.getTransform().getAbsolutePosition().x + x1;
-        this.z1 = gameObject.getTransform().getAbsolutePosition().z + z2;
-        this.x2 = gameObject.getTransform().getAbsolutePosition().x + x2;
-        this.z2 = gameObject.getTransform().getAbsolutePosition().z + z2;
+        Vector3f absolutePosition = gameObject.getTransform().getAbsolutePosition();
+        //pozycja kolidera
+        System.out.println(absolutePosition);
+        Vector3f absoluteRotation = gameObject.getTransform().getParent().getRotation();
 
-        A = -((z2-z1) / (x2-x1));
-        B = 1;
-        C = x1 * ((z2-z1) / (x2-x1)) - z1;
+        this.x1 = Math.round(absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y));
+        this.z1 =  Math.round(absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y));
+        this.x2 =  Math.round(absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y + Math.PI));
+        this.z2 =  Math.round(absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y + Math.PI));
+
+        if (x1 != x2){
+            // Sprawdza kolizje pionowo wzdłuż osi x
+            A = -((z2 - z1) / (x2 - x1));
+            B = 1;
+            C = x1 * ((z2 - z1) / (x2 - x1)) - z1;
+        }else {
+            // Sprawdza kolizje poziomo wzdłuż osi z
+            A = -((x2 - x1) / (z2 - z1));
+            B = 1;
+            C = z1 * ((x2 - x1) / (z2 - z1)) - x1;
+
+        }
+        shouldInitialize = false;
+    }
+
+    public float getDistanceFromPoint(float x, float z){
+        if (x1 != x2) {
+            return Math.abs(getA()*x + getB()*z + getC())
+                    / (float) Math.sqrt(getA() * getA() + getB() * getB());
+        }else{
+            return Math.abs(getA()*z + getB()*x + getC())
+                    / (float) Math.sqrt(getA() * getA() + getB() * getB());
+        }
 
     }
 

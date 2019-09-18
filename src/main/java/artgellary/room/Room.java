@@ -52,14 +52,14 @@ public class Room extends GameObject {
         //            float [] wallsCollidersSize = { 4f, 4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
         //            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
 
-        float [] XwallsCollidersLength = { 4f };
-        float [] XwallsCollidersPosition = { 0f,-2f };
+        float [] XwallsCollidersLength = { 4f   ,1.6f   ,1.6f  ,2f  ,2f};
+        float [] XwallsCollidersPosition = { 0f,-2f ,1.2f,2f   ,-1.2f,2f    ,-3f,0.4f   ,-3f,-0.4f};
         initializeRoomCollision(XwallsCollidersLength, XwallsCollidersPosition, false);
 
         //Inicjalizacja kolizji ścian które są wzdłóż osi Z
 
-        float [] ZwallsCollidersLength = { 4f   ,1.6f   ,1.6f  ,2f  ,2f};
-        float [] ZwallsCollidersPosition = { 2f,0f  ,1.2f,2f   ,-1.2f,2f    ,-3f,0.4f   ,-3f,-0.4f};
+        float [] ZwallsCollidersLength = { 4f   ,2f     ,2f     ,1.6f,      1.6f};
+        float [] ZwallsCollidersPosition = { 2f,0f  ,0.4f,3f    ,-0.4f,3f   ,-2f,1.2f   -2f,-1.2f};
         initializeRoomCollision(ZwallsCollidersLength, ZwallsCollidersPosition, true);
     }
 

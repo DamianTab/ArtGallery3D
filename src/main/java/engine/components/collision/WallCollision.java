@@ -37,10 +37,10 @@ public class WallCollision extends Collider {
         Vector3f absoluteRotation = new Vector3f();
         roomRotation.add(wallCollisionRotation, absoluteRotation);
 
-        this.x1 = Math.round(absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y));
-        this.z1 =  Math.round(absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y));
-        this.x2 =  Math.round(absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y + Math.PI));
-        this.z2 =  Math.round(absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y + Math.PI));
+        this.x1 = Math.round((absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y))*10f)/10f;
+        this.z1 =  Math.round((absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y))*10f)/10f;
+        this.x2 =  Math.round((absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y + Math.PI))*10f)/10f;
+        this.z2 =  Math.round((absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y + Math.PI))*10f)/10f;
 
         System.out.println(x1 + "  "+z1 + "  "+x2 + "  "+z2);
 

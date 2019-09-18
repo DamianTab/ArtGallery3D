@@ -59,7 +59,7 @@ public class Room extends GameObject {
         //Inicjalizacja kolizji ścian które są wzdłóż osi Z
 
         float [] ZwallsCollidersLength = { 4f   ,2f     ,2f     ,1.6f,      1.6f};
-        float [] ZwallsCollidersPosition = { 2f,0f  ,0.4f,3f    ,-0.4f,3f   ,-2f,1.2f   -2f,-1.2f};
+        float [] ZwallsCollidersPosition = { 2f,0f  ,0.4f,3f    ,-0.4f,3f   ,-2f,1.2f   ,-2f,-1.2f};
         initializeRoomCollision(ZwallsCollidersLength, ZwallsCollidersPosition, true);
     }
 
@@ -96,7 +96,6 @@ public class Room extends GameObject {
     private void initializeRoomCollision(float [] wallsCollidersLength,float [] wallsCollidersPosition,boolean calculateAlongZAxis){
         int j=0;
         while(j<wallsCollidersPosition.length) {
-            System.out.println(j+ "   "+j/2);
             ColliderWall colliderWall = new ColliderWall(wallsCollidersLength[j/2]);
             addChild(colliderWall);
             colliderWall.getTransform().setPosition(new Vector3f(wallsCollidersPosition[j++], 0f, wallsCollidersPosition[j++]));

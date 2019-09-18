@@ -30,8 +30,6 @@ public class WallCollision extends Collider {
         if (!shouldInitialize) return;
 
         Vector3f absolutePosition = gameObject.getTransform().getAbsolutePosition();
-       //todo komment
-        System.out.println(absolutePosition);
         Vector3f roomRotation = gameObject.getTransform().getParent().getRotation();
         Vector3f wallCollisionRotation = gameObject.getTransform().getRotation();
         Vector3f absoluteRotation = new Vector3f();
@@ -41,8 +39,6 @@ public class WallCollision extends Collider {
         this.z1 =  Math.round((absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y))*10f)/10f;
         this.x2 =  Math.round((absolutePosition.x + length / 2 * (float) Math.cos(absoluteRotation.y + Math.PI))*10f)/10f;
         this.z2 =  Math.round((absolutePosition.z + length / 2 * (float) Math.sin(absoluteRotation.y + Math.PI))*10f)/10f;
-
-        System.out.println(x1 + "  "+z1 + "  "+x2 + "  "+z2);
 
         // Flaga która mówi o tym czy sprawdzamy kolizje wzdłóż osi X. Tzn z1 == z2 i później patrzymy tylko na X (bo one się różnią)
         lookingForCollisionWithXAxis = x1 != x2 ? true : false;

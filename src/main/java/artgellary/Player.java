@@ -78,7 +78,6 @@ public class Player extends GameObject {
                 if(c != null) {
                     Collider testCollider = (Collider) c;
                     if(playerCollider.isCollision(testCollider)){
-                        System.out.println("KOLIZJA");
                         getTransform().setPosition(oldPosition);
                     }
                 }

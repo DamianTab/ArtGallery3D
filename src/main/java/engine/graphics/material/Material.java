@@ -1,7 +1,5 @@
 package engine.graphics.material;
 
-//todo
-
 import lombok.Data;
 import lombok.Getter;
 

@@ -46,7 +46,6 @@ public class WindowHandler {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);// the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
-        //TODO NIE WIEM CZY TO JEST POTRZEBNE
         glfwWindowHint(GLFW_SAMPLES, 4);
 
         // This is optional. It forces program to use the newest OpenGL - necessary for MAC

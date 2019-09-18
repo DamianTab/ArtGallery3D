@@ -103,6 +103,7 @@ public class Transform extends Component {
         }
     }
 
+
     @Override
     protected Type getType() {
         return Type.TRANSFORM;

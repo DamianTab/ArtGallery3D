@@ -1,4 +1,4 @@
-package artgellary.room;
+package artgellary.room.paintings;
 
 import engine.models.GameObject;
 import engine.utils.Rand;

@@ -1,7 +1,7 @@
 package artgellary;
 
 import engine.components.Camera;
-import engine.components.collision.CircleCollision;
+import engine.components.collision.PlayerCollision;
 import engine.components.collision.Collider;
 import engine.models.Component;
 import engine.models.GameObject;
@@ -18,9 +18,9 @@ public class Player extends GameObject {
 
     @Setter
     private GameObject rootObject;
-    private CircleCollision playerCollider;
+    private PlayerCollision playerCollider;
     MainCamera mainCamera;
-    float speed = 0.0035f;
+    float speed = 0.002f;
 
     public Player(GameObject rootObject) {
         super();
@@ -31,7 +31,7 @@ public class Player extends GameObject {
     public void start() {
         mainCamera = new MainCamera();
         addChild(mainCamera);
-        playerCollider = new CircleCollision(0.3f);
+        playerCollider = new PlayerCollision(0.3f);
         addComponent(playerCollider);
 
         getTransform().setPosition(new Vector3f(4.0f, 1.0f, -4.0f));

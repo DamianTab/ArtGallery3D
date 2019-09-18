@@ -1,6 +1,8 @@
 package artgellary.room;
 
 
+import artgellary.room.paintings.PaintingSpot;
+import artgellary.room.paintings.PaintingWall;
 import engine.components.Camera;
 import engine.components.LightSource;
 import engine.components.MeshFilter;
@@ -44,6 +46,8 @@ public class Room extends GameObject {
             addChild(paintingWalls[i]);
             paintingWalls[i].getTransform().setRotation(new Vector3f(0.0f, (i + 1)*(float)Math.PI/2.0f, 0.0f));
         }
+
+        initializeRoomCollision();
     }
 
     public void prepareLight(Camera camera) {
@@ -73,6 +77,24 @@ public class Room extends GameObject {
         }
         else {
             return paintingWalls[1].getPaintingSpots()[index - 3];
+        }
+    }
+
+    private void initializeRoomCollision(){
+
+        //Inicjalizacja ścian które są wzdłóż osi X
+        float [] wallsCollidersLength = { 4f };
+        float [] wallsCollidersPosition = { 2f,0f };
+        //            float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
+        //            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
+        int j=0;
+        System.out.println(wallsCollidersPosition.length);
+        while(j<wallsCollidersPosition.length) {
+            System.out.println(j+ "   "+j/2);
+            ColliderWall colliderWall = new ColliderWall(wallsCollidersLength[j/2]);
+            addChild(colliderWall);
+            colliderWall.getTransform().setPosition(new Vector3f(wallsCollidersPosition[j++], 0f, wallsCollidersPosition[j++]));
+            colliderWall.getTransform().setRotation(new Vector3f(0.0f, (float)Math.PI/2.0f, 0.0f));
         }
     }
 }

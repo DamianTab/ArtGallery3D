@@ -1,10 +1,9 @@
-package artgellary.room;
+package artgellary.room.paintings;
 
 import engine.components.MeshFilter;
 import engine.components.MeshRenderer;
 import engine.graphics.shader.ShaderManager;
 import engine.models.GameObject;
-import org.joml.Vector3f;
 
 // Obiekt opisujący obraz wraz z ramą.
 public class Painting  extends GameObject {

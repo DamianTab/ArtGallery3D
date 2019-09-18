@@ -1,4 +1,4 @@
-package artgellary.room;
+package artgellary.room.paintings;
 
 import engine.components.MeshFilter;
 import engine.components.MeshRenderer;

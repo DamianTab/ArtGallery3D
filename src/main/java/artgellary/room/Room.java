@@ -49,7 +49,7 @@ public class Room extends GameObject {
 
         //Inicjalizacja kolizji ścian które są wzdłóż osi X
 
-        //            float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
+        //            float [] wallsCollidersSize = { 4f, 4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
         //            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
 
         float [] XwallsCollidersLength = { 4f };
@@ -58,8 +58,8 @@ public class Room extends GameObject {
 
         //Inicjalizacja kolizji ścian które są wzdłóż osi Z
 
-        float [] ZwallsCollidersLength = { 4f };
-        float [] ZwallsCollidersPosition = { 2f,0f };
+        float [] ZwallsCollidersLength = { 4f   ,1.6f   ,1.6f  ,2f  ,2f};
+        float [] ZwallsCollidersPosition = { 2f,0f  ,1.2f,2f   ,-1.2f,2f    ,-3f,0.4f   ,-3f,-0.4f};
         initializeRoomCollision(ZwallsCollidersLength, ZwallsCollidersPosition, true);
     }
 

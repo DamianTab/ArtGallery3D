@@ -47,7 +47,20 @@ public class Room extends GameObject {
             paintingWalls[i].getTransform().setRotation(new Vector3f(0.0f, (i + 1)*(float)Math.PI/2.0f, 0.0f));
         }
 
-        initializeRoomCollision();
+        //Inicjalizacja kolizji ścian które są wzdłóż osi X
+
+        //            float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
+        //            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
+
+        float [] XwallsCollidersLength = { 4f };
+        float [] XwallsCollidersPosition = { 0f,-2f };
+        initializeRoomCollision(XwallsCollidersLength, XwallsCollidersPosition, false);
+
+        //Inicjalizacja kolizji ścian które są wzdłóż osi Z
+
+        float [] ZwallsCollidersLength = { 4f };
+        float [] ZwallsCollidersPosition = { 2f,0f };
+        initializeRoomCollision(ZwallsCollidersLength, ZwallsCollidersPosition, true);
     }
 
     public void prepareLight(Camera camera) {
@@ -80,21 +93,16 @@ public class Room extends GameObject {
         }
     }
 
-    private void initializeRoomCollision(){
-
-        //Inicjalizacja ścian które są wzdłóż osi X
-        float [] wallsCollidersLength = { 4f };
-        float [] wallsCollidersPosition = { 2f,0f };
-        //            float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
-        //            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
+    private void initializeRoomCollision(float [] wallsCollidersLength,float [] wallsCollidersPosition,boolean calculateAlongZAxis){
         int j=0;
-        System.out.println(wallsCollidersPosition.length);
         while(j<wallsCollidersPosition.length) {
             System.out.println(j+ "   "+j/2);
             ColliderWall colliderWall = new ColliderWall(wallsCollidersLength[j/2]);
             addChild(colliderWall);
             colliderWall.getTransform().setPosition(new Vector3f(wallsCollidersPosition[j++], 0f, wallsCollidersPosition[j++]));
-            colliderWall.getTransform().setRotation(new Vector3f(0.0f, (float)Math.PI/2.0f, 0.0f));
+
+            //Jesli jest to oś Z to obracamy wszystkie kolidery o 90 stopni (taka jest po prostu w naszym modelu matematycznym)
+            if (calculateAlongZAxis) colliderWall.getTransform().setRotation(new Vector3f(0.0f, (float)Math.PI/2.0f, 0.0f));
         }
     }
 }

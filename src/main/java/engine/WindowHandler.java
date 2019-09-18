@@ -8,6 +8,7 @@ import org.lwjgl.system.Configuration;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -22,9 +23,6 @@ public class WindowHandler {
     private int width;
     @Getter
     private int height;
-
-
-    // The window handle
     @Getter
     private long window;
 
@@ -52,10 +50,10 @@ public class WindowHandler {
         glfwWindowHint(GLFW_SAMPLES, 4);
 
         // This is optional. It forces program to use the newest OpenGL - necessary for MAC
-//        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-//        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-//        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-//        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
         window = glfwCreateWindow(width, height, title, NULL, NULL);
         if (window == NULL)

@@ -34,6 +34,7 @@ public class Shader {
         glAttachShader(program, id);
     }
 
+//    Not used
     public void deattach(int program) {
         glDetachShader(program, id);
     }

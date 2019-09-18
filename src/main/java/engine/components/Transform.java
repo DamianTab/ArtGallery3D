@@ -103,17 +103,6 @@ public class Transform extends Component {
         }
     }
 
-    // Get position relative to given parent p
-    public Vector3f getRelativePosition(Transform p) {
-        if(parent == null) {
-            return null;
-        }
-        else {
-            Vector4f v = new Vector4f(position, 1.0f).mul(parent.getRelativeMatrix(p));
-            return new Vector3f(v.x, v.y, v.z).div(v.w);
-        }
-    }
-
     @Override
     protected Type getType() {
         return Type.TRANSFORM;

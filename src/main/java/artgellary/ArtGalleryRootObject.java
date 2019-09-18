@@ -30,11 +30,11 @@ public class ArtGalleryRootObject extends GameObject {
             rooms[i].getTransform().setRotation(new Vector3f(0.0f, rotation, 0.0f));
             rooms[i].getTransform().setPosition(new Vector3f(x, 0.0f, z));
 
-            float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
-            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
+            float [] wallsCollidersSize = { 4f,4f, };
+            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f  };
 
             //            float [] wallsCollidersSize = { 4f,4f, 1.6f, 2f, 2f,1.6f,1.6f,2f,2f,1.6f };
-//            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
+            //            float [] wallsCollidersPosition = { 0f,-2f  ,2f,0f   ,1.2f,2f   ,0.4f,3f   ,-0.4f,3f    ,-1.2f,2f    -2f,1.2f    ,-3f,0.4f   ,-3f,-0.4f  ,-2f,-1.2f };
             int j=0;
             System.out.println(wallsCollidersPosition.length);
             while(j<wallsCollidersPosition.length) {

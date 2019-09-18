@@ -80,7 +80,6 @@ public class Player extends GameObject {
                     if(playerCollider.isCollision(testCollider)){
                         System.out.println("KOLIZJA");
                         getTransform().setPosition(oldPosition);
-                        return;
                     }
                 }
             }

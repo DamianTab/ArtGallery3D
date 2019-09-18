@@ -25,6 +25,5 @@ public class PaintingWall extends GameObject {
 
     @Override
     public void update() {
-
     }
 }

@@ -47,8 +47,6 @@ public class MeshManager {
         return planeMesh;
     }
 
-    //    ----------------------------------------------------------------------
-
     private Map<String, MeshFile> meshContainer = new HashMap<>();
     private PlaneMesh planeMesh;
 

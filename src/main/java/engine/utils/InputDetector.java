@@ -7,8 +7,6 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-//todo Damian to zrobi // Damian zrobił to źle
-
 public class InputDetector {
 
     private static double mouseX, mouseY;
@@ -20,18 +18,14 @@ public class InputDetector {
 
     public static void start() {
         glfwSetInputMode(windowHandler.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    }
-
-    public static void update(){
-        loadMousePosition();
+        setCallbackToLoadMousePosition();
     }
 
     public static boolean isKeyPressed(int key) {
         return glfwGetKey(windowHandler.getWindow(), key) == GLFW_PRESS;
     }
 
-    private static void loadMousePosition() {
-
+    private static void setCallbackToLoadMousePosition() {
         glfwSetCursorPosCallback(windowHandler.getWindow(), new GLFWCursorPosCallback() {
             @Override
             public void invoke(long win, double mouseX, double mouseY) {

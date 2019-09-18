@@ -27,7 +27,6 @@ public class MainCamera extends GameObject {
     @Override
     public void update() {
         updateMouse();
-        //updateKeyboard();
     }
 
     private void updateMouse(){
@@ -35,7 +34,6 @@ public class MainCamera extends GameObject {
         Vector2f vector2f = InputDetector.getMousePosition();
         float mouseX = vector2f.x;
         float mouseY = vector2f.y;
-
 
         if (first){
             lastMouseX = mouseX;
@@ -57,8 +55,8 @@ public class MainCamera extends GameObject {
         if(pitch < -89.0f)
             pitch = -89.0f;
 
-        float x = (float)Math.toRadians((double) pitch);
-        float y = (float)Math.toRadians((double) yaw);
+        float x = (float)Math.toRadians(pitch);
+        float y = (float)Math.toRadians(yaw);
         getTransform().setRotation(new Vector3f(x, y, 0.0f));
     }
 }

@@ -22,10 +22,6 @@ public class ShaderProgram {
         init();
     }
 
-    public ShaderProgram(String vertexPath, String fragmentPath) throws Exception {
-        this(vertexPath, fragmentPath, null);
-    }
-
     private void init() throws Exception {
         id = glCreateProgram();
         if (id == 0) {
@@ -63,7 +59,4 @@ public class ShaderProgram {
         glUseProgram(id);
     }
 
-    public boolean equals(ShaderProgram other) {
-        return vertexPath.equals(other.vertexPath) && fragmentPath.equals(other.fragmentPath);
-    }
 }

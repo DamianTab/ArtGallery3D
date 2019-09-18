@@ -3,10 +3,18 @@ package engine.graphics;
 import engine.graphics.texture.Texture;
 import lombok.Getter;
 
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL30.GL_DEPTH_ATTACHMENT;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
+import static org.lwjgl.opengl.GL30.GL_NONE;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
+import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
+import static org.lwjgl.opengl.GL30.glDrawBuffer;
+import static org.lwjgl.opengl.GL30.glGenFramebuffers;
+import static org.lwjgl.opengl.GL30.glReadBuffer;
+import static org.lwjgl.opengl.GL30.glViewport;
 import static org.lwjgl.opengl.GL32.glFramebufferTexture;
 
-//Not used
 public class Framebuffer {
     private int id;
     @Getter
@@ -24,7 +32,7 @@ public class Framebuffer {
         glDrawBuffer(GL_NONE);
         glReadBuffer(GL_NONE);
 
-        if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             System.err.println("Framebuffer not finished!");
         }
 

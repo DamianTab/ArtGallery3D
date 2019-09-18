@@ -13,7 +13,6 @@ public abstract class Texture {
     protected int id;
     public abstract int getHeight();
     public abstract int getWidth();
-    //public abstract int getType();
     public abstract void bind();
     public abstract void unbind();
     public abstract int getTextureUnit();

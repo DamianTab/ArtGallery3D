@@ -63,9 +63,9 @@ public class LineCollision extends Collider {
 
     }
 
+//    Not used
     @Override
     public boolean isCollision(Collider collider) {
-        //todo Damian
         return false;
     }
 }

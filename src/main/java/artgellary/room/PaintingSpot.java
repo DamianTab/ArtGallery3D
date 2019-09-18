@@ -20,12 +20,10 @@ public class PaintingSpot extends GameObject {
     public Vector3f getObservePosition() {
         Vector3f position = getTransform().getPosition();
         Vector3f result = new Vector3f(position.x, 0.0f, position.z - 1.0f);
-        //getTransform().getPosition().add(new Vector3f(), result);
         return result;
     }
 
     @Override
     public void update() {
-
     }
 }

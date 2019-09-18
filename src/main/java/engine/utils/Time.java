@@ -1,10 +1,12 @@
 package engine.utils;
 
 public class Time {
+    //uzywane tylko do pomiaru FPS
     private static int framesCounter=0;
     private static long startTick;
     private static long endTick;
     private static long time_elapsed=0;
+    //Używane w logice np. do przemieszczania light sources'ów
     public static long TIME_ELAPSED=0;
     public static long DELTA_TIME=0;
 

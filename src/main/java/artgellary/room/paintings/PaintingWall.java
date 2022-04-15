@@ -1,7 +1,6 @@
-package artgellary.room;
+package artgellary.room.paintings;
 
 import engine.models.GameObject;
-import engine.utils.Rand;
 import lombok.Getter;
 import org.joml.Vector3f;
 
@@ -25,6 +24,5 @@ public class PaintingWall extends GameObject {
 
     @Override
     public void update() {
-
     }
 }

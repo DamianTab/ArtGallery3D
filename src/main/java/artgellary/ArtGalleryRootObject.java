@@ -1,6 +1,7 @@
 package artgellary;
 
 
+import artgellary.room.ColliderWall;
 import artgellary.room.Room;
 import engine.models.GameObject;
 import org.joml.Vector3f;
@@ -29,7 +30,7 @@ public class ArtGalleryRootObject extends GameObject {
         }
 
         //Dodanie gracza który się porusza
-        player = new Player();
+        player = new Player(this);
         addChild(player);
     }
 

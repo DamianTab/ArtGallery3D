@@ -12,6 +12,6 @@ public class ArtGallery  extends Application {
 
     @Override
     public WindowHandler getWindowHandler() {
-        return new WindowHandler("Art Gallery 3D", 1000, 1000);
+        return new WindowHandler("Art Gallery 3D", 1800, 900);
     }
 }

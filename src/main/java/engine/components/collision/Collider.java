@@ -15,5 +15,4 @@ public abstract class Collider extends Component {
     protected Type getType() {
         return Type.COLLIDER;
     }
-    //todo zrobi Damian
 }

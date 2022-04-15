@@ -31,7 +31,8 @@ public class Renderer {
         Camera camera = findCamera(root);
         if(camera != null) {
             camera.generateViewAndPerspective();
-            //prepareLights(root, camera);
+//            Renderowanie dla każdego obiektu cubeMapy - zrezygnowaliśmy bo zabierało duzo fps i słaby efekt
+//            prepareLights(root, camera);
             windowHandler.setViewPort();
             glClear(GL_DEPTH_BUFFER_BIT);
             root.executeForEvery((GameObject gameObject) -> {

@@ -1,9 +1,12 @@
 package engine.utils;
 
 public class Time {
+    //uzywane tylko do pomiaru FPS
     private static int framesCounter=0;
     private static long startTick;
     private static long endTick;
+    private static long time_elapsed=0;
+    //Używane w logice np. do przemieszczania light sources'ów
     public static long TIME_ELAPSED=0;
     public static long DELTA_TIME=0;
 
@@ -20,17 +23,18 @@ public class Time {
         endTick = System.nanoTime();
         DELTA_TIME = (endTick - startTick)/(1000*1000);
         TIME_ELAPSED += DELTA_TIME;
+        time_elapsed += DELTA_TIME;
     }
 
 
     public static void showFPS(){
 
-        if (TIME_ELAPSED>precision){
-            System.out.println("FPS:   "+(float) framesCounter/TIME_ELAPSED * precision);
-            TIME_ELAPSED=0;
+        if (time_elapsed>precision){
+            System.out.println("FPS:   "+(float) framesCounter/time_elapsed * precision);
+            time_elapsed=0;
             framesCounter=0;
         }else{
-            TIME_ELAPSED += endTick-startTick;
+            time_elapsed += endTick-startTick;
             framesCounter++;
         }
 

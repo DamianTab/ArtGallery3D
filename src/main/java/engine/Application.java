@@ -21,16 +21,12 @@ public abstract class Application {
     private Renderer renderer;
 
     public void run() {
-        System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-
         init();
         loop();
-
         windowHandler.destroyAndClean();
     }
 
     private void init() {
-
         windowHandler.init();
         InputDetector.windowHandler = windowHandler;
         InputDetector.start();
@@ -60,9 +56,6 @@ public abstract class Application {
             Time.startTickFPS();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the Framebuffer
 
-            //Update mouse input
-            InputDetector.update();
-
             //Logic here
             root.executeForEvery(ObjectBehavior::update);
             renderer.draw(root);
@@ -72,8 +65,8 @@ public abstract class Application {
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
-
             Time.endTickFPS();
+            Time.showFPS();
         }
     }
 }

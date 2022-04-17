@@ -37,8 +37,8 @@
 ## 📝 Table of Contents
 - [About](#about)
 - [Technologies](#technologies)
-- [Usage](#usage)
 - [Getting Started](#getting_started)
+- [Usage](#usage)
 - [Deployment](#deployment)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
@@ -51,7 +51,7 @@ This is simple and small 3D game that takes place in art gallery. Player is allo
 <br/>
 
 ## ⛏️ Technologies <a name = "technologies"></a>
-- **Java 11** - or higher
+- **Java 11**
 - **LWJGL 3.2.2** - Java library for 3D games
 - **JOML 1.9.16** - Java mathematics
 - **GLSL v330** - Shaders
@@ -70,6 +70,9 @@ What things you need to install the software and how to install them.
 maven
 java 11+
 ```
+<br/>
+
+
 Download all dependency through maven and run class ``src/main/java/Main.java``
 
 <br/>
